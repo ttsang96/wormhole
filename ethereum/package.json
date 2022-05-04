@@ -30,6 +30,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@hashgraph/sdk": "^2.13.1",
     "dotenv": "^10.0.0",
     "elliptic": "^6.5.2",
     "ganache-cli": "^6.12.1",
