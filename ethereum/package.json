@@ -30,6 +30,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@hashgraph/hethers": "^1.1.0",
     "@hashgraph/sdk": "^2.13.1",
     "dotenv": "^10.0.0",
     "elliptic": "^6.5.2",
