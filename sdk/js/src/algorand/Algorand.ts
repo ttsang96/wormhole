@@ -534,7 +534,7 @@ export async function submitVAAHeader(
   bridgeId: bigint,
   vaa: Uint8Array,
   senderAddr: string,
-  appid: bigint
+  appid: bigint = BigInt(0)
 ): Promise<SubmitVAAState> {
   // A lot of our logic here depends on parseVAA and knowing what the payload is..
   const parsedVAA = _parseVAAAlgorand(vaa);
@@ -544,15 +544,17 @@ export async function submitVAAHeader(
   const index: number = parsedVAA.index;
 
   let txs: TransactionSignerPair[] = [];
-  // "seqAddr"
-  const { addr: seqAddr, txs: seqOptInTxs } = await optin(
-    client,
-    senderAddr,
-    appid,
-    seq,
-    chainRaw + em
-  );
-  txs.push(...seqOptInTxs);
+  let seqAddr = "";
+  if (appid != BigInt(0)) {
+    const { addr: seqAddr, txs: seqOptInTxs } = await optin(
+      client,
+      senderAddr,
+      appid,
+      seq,
+      chainRaw + em
+    );
+    txs.push(...seqOptInTxs);
+  }
   const guardianPgmName = textToHexString("guardian");
   // And then the signatures to help us verify the vaa_s
   // "guardianAddr"
