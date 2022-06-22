@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.js": "/wormhole/static/js/main.e3b83810.js",
-    "static/js/877.d91c789c.chunk.js": "/wormhole/static/js/877.d91c789c.chunk.js",
+    "main.js": "/wormhole/static/js/main.9bde3487.js",
+    "static/js/877.60d8b725.chunk.js": "/wormhole/static/js/877.60d8b725.chunk.js",
     "static/js/477.e0ab06f9.chunk.js": "/wormhole/static/js/477.e0ab06f9.chunk.js",
-    "static/js/14.cba86ac7.chunk.js": "/wormhole/static/js/14.cba86ac7.chunk.js",
+    "static/js/14.6d5fdcb5.chunk.js": "/wormhole/static/js/14.6d5fdcb5.chunk.js",
     "static/js/474.4f1a5528.chunk.js": "/wormhole/static/js/474.4f1a5528.chunk.js",
-    "static/js/764.96dde77e.chunk.js": "/wormhole/static/js/764.96dde77e.chunk.js",
+    "static/js/764.eaed8a25.chunk.js": "/wormhole/static/js/764.eaed8a25.chunk.js",
     "static/js/787.aa9406b0.chunk.js": "/wormhole/static/js/787.aa9406b0.chunk.js",
-    "static/js/36.87323912.chunk.js": "/wormhole/static/js/36.87323912.chunk.js",
+    "static/js/36.c1e58567.chunk.js": "/wormhole/static/js/36.c1e58567.chunk.js",
     "static/js/51.0d22c8ac.chunk.js": "/wormhole/static/js/51.0d22c8ac.chunk.js",
     "static/js/578.297d33f0.chunk.js": "/wormhole/static/js/578.297d33f0.chunk.js",
     "static/js/828.01ed48c8.chunk.js": "/wormhole/static/js/828.01ed48c8.chunk.js",
@@ -17,9 +17,9 @@
     "static/js/387.50c9cd48.chunk.js": "/wormhole/static/js/387.50c9cd48.chunk.js",
     "static/js/127.61e8d399.chunk.js": "/wormhole/static/js/127.61e8d399.chunk.js",
     "static/js/163.0a046ad7.chunk.js": "/wormhole/static/js/163.0a046ad7.chunk.js",
-    "static/js/348.e223c00b.chunk.js": "/wormhole/static/js/348.e223c00b.chunk.js",
+    "static/js/348.65759f99.chunk.js": "/wormhole/static/js/348.65759f99.chunk.js",
     "static/js/589.3c5ee22b.chunk.js": "/wormhole/static/js/589.3c5ee22b.chunk.js",
-    "module.wasm": "/wormhole/58c610c4dd25fe7f8e71.module.wasm",
+    "module.wasm": "/wormhole/d6789f2466eed31df184.module.wasm",
     "static/media/SuisseBPIntlBold.woff2": "/wormhole/static/media/SuisseBPIntlBold.19a3f46a5e2ccd6ff5ff.woff2",
     "static/media/portal_logo_w.svg": "/wormhole/static/media/portal_logo_w.484271a5c853855c2a4436a34d082aed.svg",
     "static/media/neon.svg": "/wormhole/static/media/neon.c3f3c0c2eeecc7d724bfcce581d1b4bf.svg",
@@ -44,11 +44,11 @@
     "static/media/avax.svg": "/wormhole/static/media/avax.1e98fe3597e8eaf3f1fbacc3013f2d2f.svg",
     "static/media/algorand.svg": "/wormhole/static/media/algorand.699bf008d7073523b8edd75d8f3b38ac.svg",
     "static/media/eth.svg": "/wormhole/static/media/eth.5a5de20bf3808241fc61ed9ad7680ab5.svg",
-    "main.e3b83810.js.map": "/wormhole/static/js/main.e3b83810.js.map",
-    "877.d91c789c.chunk.js.map": "/wormhole/static/js/877.d91c789c.chunk.js.map",
-    "14.cba86ac7.chunk.js.map": "/wormhole/static/js/14.cba86ac7.chunk.js.map",
-    "764.96dde77e.chunk.js.map": "/wormhole/static/js/764.96dde77e.chunk.js.map",
-    "36.87323912.chunk.js.map": "/wormhole/static/js/36.87323912.chunk.js.map",
+    "main.9bde3487.js.map": "/wormhole/static/js/main.9bde3487.js.map",
+    "877.60d8b725.chunk.js.map": "/wormhole/static/js/877.60d8b725.chunk.js.map",
+    "14.6d5fdcb5.chunk.js.map": "/wormhole/static/js/14.6d5fdcb5.chunk.js.map",
+    "764.eaed8a25.chunk.js.map": "/wormhole/static/js/764.eaed8a25.chunk.js.map",
+    "36.c1e58567.chunk.js.map": "/wormhole/static/js/36.c1e58567.chunk.js.map",
     "578.297d33f0.chunk.js.map": "/wormhole/static/js/578.297d33f0.chunk.js.map",
     "828.01ed48c8.chunk.js.map": "/wormhole/static/js/828.01ed48c8.chunk.js.map",
     "853.c082e366.chunk.js.map": "/wormhole/static/js/853.c082e366.chunk.js.map",
@@ -56,10 +56,10 @@
     "387.50c9cd48.chunk.js.map": "/wormhole/static/js/387.50c9cd48.chunk.js.map",
     "127.61e8d399.chunk.js.map": "/wormhole/static/js/127.61e8d399.chunk.js.map",
     "163.0a046ad7.chunk.js.map": "/wormhole/static/js/163.0a046ad7.chunk.js.map",
-    "348.e223c00b.chunk.js.map": "/wormhole/static/js/348.e223c00b.chunk.js.map",
+    "348.65759f99.chunk.js.map": "/wormhole/static/js/348.65759f99.chunk.js.map",
     "589.3c5ee22b.chunk.js.map": "/wormhole/static/js/589.3c5ee22b.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.e3b83810.js"
+    "static/js/main.9bde3487.js"
   ]
 }
