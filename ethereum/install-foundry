@@ -1,0 +1,52 @@
+#!/bin/bash
+
+set -euo pipefail
+
+# Read compiler version from foundry.toml
+SOLC_VERSION=$(grep solc_version foundry.toml | cut -d'=' -f2 | tr -d '" ')
+
+main() {
+  OS=$(uname -s)
+  case "$OS" in
+    Darwin)
+      install_mac
+      ;;
+    *)
+      echo "Unsupported OS: $OS"
+      exit 1
+      ;;
+  esac
+}
+
+function install_mac() {
+  if ! command -v brew > /dev/null; then
+    echo "brew is unavailable. Please install: https://brew.sh"
+  fi
+
+  if ! brew list libusb > /dev/null 2>&1; then
+    echo "Installing libusb"
+    brew install libusb
+  fi
+
+  if ! command -v foundryup > /dev/null; then
+    curl -L https://foundry.paradigm.xyz --silent | bash
+    "$HOME/.foundry/bin/foundryup"
+  fi
+
+  INSTALL_DIR="$HOME/.svm/$SOLC_VERSION"
+
+  mkdir -p $INSTALL_DIR
+
+  SOLC_PATH="$INSTALL_DIR/solc-$SOLC_VERSION"
+
+  if [ ! -f "$SOLC_PATH" ]; then
+    echo "Installing solc-$SOLC_VERSION"
+    curl -L --silent "https://github.com/ethereum/solidity/releases/download/v$SOLC_VERSION/solc-macos" > "$SOLC_PATH"
+    chmod +x "$SOLC_PATH"
+    echo "Installed $SOLC_PATH"
+  else
+    echo "Solidity compiler found: $SOLC_PATH"
+  fi
+}
+
+main "$@"; exit

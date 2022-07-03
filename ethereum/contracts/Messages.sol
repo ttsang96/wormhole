@@ -7,6 +7,7 @@ pragma experimental ABIEncoderV2;
 import "./Getters.sol";
 import "./Structs.sol";
 import "./libraries/external/BytesLib.sol";
+import "forge-std/Test.sol";
 
 
 contract Messages is Getters {
@@ -152,4 +153,24 @@ contract Messages is Getters {
     function quorum(uint numGuardians) public pure virtual returns (uint numSignaturesRequiredForQuorum) {
         return ((numGuardians * 2) / 3) + 1;
     }
+}
+
+contract TestMessages is Messages, Test {
+  function testQuorum() public {
+    assertEq(quorum(0), 1);
+    assertEq(quorum(1), 1);
+    assertEq(quorum(2), 2);
+    assertEq(quorum(3), 3);
+    assertEq(quorum(4), 3);
+    assertEq(quorum(5), 4);
+    assertEq(quorum(6), 5);
+    assertEq(quorum(7), 5);
+    assertEq(quorum(8), 6);
+    assertEq(quorum(9), 7);
+    assertEq(quorum(10), 7);
+    assertEq(quorum(11), 8);
+    assertEq(quorum(12), 9);
+    assertEq(quorum(19), 13);
+    assertEq(quorum(20), 14);
+  }
 }
