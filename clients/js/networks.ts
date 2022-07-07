@@ -189,7 +189,7 @@ const TESTNET = {
     key: get_env_var("TERRA_MNEMONIC"),
   },
   injective: {
-    rpc: "https://testnet.lcd.injective.dev",
+    rpc: "https://k8s.testnet.tm.injective.network:443",
     chain_id: "injective-888",
     key: get_env_var("ETH_KEY_TESTNET"),
   },
