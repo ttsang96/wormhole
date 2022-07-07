@@ -99,6 +99,10 @@ const MAINNET = {
     rpc: undefined,
     key: undefined,
   },
+  osmosis: {
+    rpc: undefined,
+    key: undefined,
+  },
   ropsten: {
     rpc: `https://rpc.ankr.com/eth_ropsten`,
     key: get_env_var("ETH_KEY"),
@@ -189,6 +193,11 @@ const TESTNET = {
     chain_id: "injective-888",
     key: get_env_var("ETH_KEY_TESTNET"),
   },
+  osmosis: {
+    rpc: undefined,
+    chain_id: "osmo-test-4",
+    key: get_env_var("ETH_KEY_TESTNET"),
+  },
   ropsten: {
     rpc: `https://rpc.ankr.com/eth_ropsten`,
     key: get_env_var("ETH_KEY_TESTNET"),
@@ -275,6 +284,10 @@ const DEVNET = {
     key: "notice oak worry limit wrap speak medal online prefer cluster roof addict wrist behave treat actual wasp year salad speed social layer crew genius",
   },
   injective: {
+    rpc: undefined,
+    key: undefined,
+  },
+  osmosis: {
     rpc: undefined,
     key: undefined,
   },

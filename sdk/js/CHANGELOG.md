@@ -4,7 +4,7 @@
 
 ### Added
 
-Injective support
+Injective and Osmosis support
 
 ## 0.4.5
 

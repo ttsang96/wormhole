@@ -19,6 +19,7 @@ export const CHAINS = {
   neon: 17,
   terra2: 18,
   injective: 19,
+  osmosis: 20,
   ropsten: 10001,
 } as const;
 
@@ -45,7 +46,7 @@ export type EVMChainName =
   | "neon"
   | "ropsten";
 
-export type CosmWasmChainName = "terra" | "terra2" | "injective";
+export type CosmWasmChainName = "terra" | "terra2" | "injective" | "osmosis";
 export type TerraChainName = "terra" | "terra2";
 
 export type Contracts = {
@@ -160,6 +161,11 @@ const MAINNET = {
     token_bridge: undefined,
     nft_bridge: undefined,
   },
+  osmosis: {
+    core: undefined,
+    token_bridge: undefined,
+    nft_bridge: undefined,
+  },
   ropsten: {
     core: undefined,
     token_bridge: undefined,
@@ -267,6 +273,11 @@ const TESTNET = {
   injective: {
     core: "inj1q0e70vhrv063eah90mu97sazhywmeegp7myvnh",
     token_bridge: "inj1np4pvfw5fe9nj6ds3fv8v9cm9d8umasm5ltrtq",
+    nft_bridge: undefined,
+  },
+  osmosis: {
+    core: "osmo1kt9gt2z4hefd4frrzqpjmhpq8p7vvwqjdy9qw05hsq7ldp4p2tnsmuagc5",
+    token_bridge: undefined,
     nft_bridge: undefined,
   },
   ropsten: {
@@ -377,6 +388,11 @@ const DEVNET = {
     token_bridge: undefined,
     nft_bridge: undefined,
   },
+  osmosis: {
+    core: undefined,
+    token_bridge: undefined,
+    nft_bridge: undefined,
+  },
   ropsten: {
     core: undefined,
     token_bridge: undefined,
@@ -442,6 +458,7 @@ export const CHAIN_ID_MOONBEAM = CHAINS["moonbeam"];
 export const CHAIN_ID_NEON = CHAINS["neon"];
 export const CHAIN_ID_TERRA2 = CHAINS["terra2"];
 export const CHAIN_ID_INJECTIVE = CHAINS["injective"];
+export const CHAIN_ID_OSMOSIS = CHAINS["osmosis"];
 export const CHAIN_ID_ETHEREUM_ROPSTEN = CHAINS["ropsten"];
 
 // This inverts the [[CHAINS]] object so that we can look up a chain by id
@@ -569,7 +586,8 @@ export function isCosmWasmChain(
   return (
     chainId === CHAIN_ID_TERRA ||
     chainId === CHAIN_ID_TERRA2 ||
-    chainId === CHAIN_ID_INJECTIVE
+    chainId === CHAIN_ID_INJECTIVE ||
+    chainId === CHAIN_ID_OSMOSIS
   );
 }
 
