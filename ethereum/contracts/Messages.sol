@@ -155,6 +155,7 @@ contract Messages is Getters {
     }
 }
 
+// TODO(csongor): maybe move this to another file
 contract TestMessages is Messages, Test {
   function testQuorum() public {
     assertEq(quorum(0), 1);
