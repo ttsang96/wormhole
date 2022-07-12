@@ -984,7 +984,7 @@ impl Portal {
         let h = hex::decode(vaa).expect("invalidVaa");
         let pvaa = state::ParsedVAA::parse(&h);
 
-        self.dups.contains_key(&pvaa.hash)
+        self.dups.contains_key(&pvaa.hash) && self.dups.get(&pvaa.hash).unwrap()
     }
 
     #[payable]

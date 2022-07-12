@@ -1,32 +1,57 @@
-//#![allow(unused_mut)]
-#![allow(unused_imports)]
-#![allow(unused_variables)]
+#![allow(unused_mut)]
+//#![allow(unused_imports)]
+//#![allow(unused_variables)]
 //#![allow(dead_code)]
 
-use near_contract_standards::non_fungible_token::metadata::{
-    NFTContractMetadata, NonFungibleTokenMetadataProvider, TokenMetadata, NFT_METADATA_SPEC,
+use {
+    near_contract_standards::non_fungible_token::{
+        metadata::{
+            NFTContractMetadata,
+            TokenMetadata,
+            NFT_METADATA_SPEC,
+        },
+        Token,
+        TokenId,
+    },
+    near_sdk::{
+        borsh::{
+            self,
+            BorshDeserialize,
+            BorshSerialize,
+        },
+        collections::{
+            LookupMap,
+            UnorderedSet,
+        },
+        env,
+        ext_contract,
+        json_types::{
+            Base64VecU8,
+        },
+        near_bindgen,
+        utils::{
+            assert_one_yocto,
+            is_promise_success,
+        },
+        AccountId,
+        Balance,
+        Gas,
+        PanicOnDefault,
+        Promise,
+        PromiseError,
+        PromiseOrValue,
+        PublicKey,
+    },
+    std::str,
 };
-use near_contract_standards::non_fungible_token::NonFungibleToken;
-use near_contract_standards::non_fungible_token::{Token, TokenId};
-
-use near_sdk::json_types::{Base64VecU8, U128};
-
-use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
-use near_sdk::collections::{LookupMap, UnorderedSet};
-use near_sdk::{
-    env, ext_contract, near_bindgen, require, AccountId, Balance, Gas, PanicOnDefault, Promise,
-    PromiseError, PromiseOrValue, PublicKey,
-};
-use serde::{Deserialize, Serialize};
-
-use near_sdk::utils::{assert_one_yocto, is_promise_success};
-
-use std::str;
 
 pub mod byte_utils;
 pub mod state;
 
-use crate::byte_utils::{get_string_from_32, ByteUtils};
+use crate::byte_utils::{
+    get_string_from_32,
+    ByteUtils,
+};
 
 const CHAIN_ID_NEAR: u16 = 15;
 const CHAIN_ID_SOL: u16 = 1;
@@ -73,43 +98,66 @@ pub trait Wormhole {
 
 #[derive(BorshDeserialize, BorshSerialize, PanicOnDefault)]
 pub struct TokenData {
-    meta: String,
+    meta:    String,
     address: String,
-    chain: u16,
+    chain:   u16,
+}
+
+#[near_bindgen]
+#[derive(BorshDeserialize, BorshSerialize)]
+pub struct NFTBridgeOld {
+    booted:               bool,
+    core:                 AccountId,
+    dups:                 UnorderedSet<Vec<u8>>,
+    owner_pk:             PublicKey,
+    emitter_registration: LookupMap<u16, Vec<u8>>,
+    last_asset:           u32,
+    upgrade_hash:         Vec<u8>,
+
+    tokens:    LookupMap<AccountId, TokenData>,
+    key_map:   LookupMap<Vec<u8>, AccountId>,
+    hash_map:  LookupMap<Vec<u8>, AccountId>,
+    token_map: LookupMap<Vec<u8>, String>,
 }
 
 #[near_bindgen]
 #[derive(BorshDeserialize, BorshSerialize)]
 pub struct NFTBridge {
-    booted: bool,
-    core: AccountId,
-    dups: UnorderedSet<Vec<u8>>,
-    owner_pk: PublicKey,
+    booted:               bool,
+    core:                 AccountId,
+    gov_idx:              u32,
+    dups:                 LookupMap<Vec<u8>, bool>,
+    owner_pk:             PublicKey,
     emitter_registration: LookupMap<u16, Vec<u8>>,
-    last_asset: u32,
-    upgrade_hash: Vec<u8>,
+    last_asset:           u32,
+    upgrade_hash:         Vec<u8>,
 
-    tokens: LookupMap<AccountId, TokenData>,
-    key_map: LookupMap<Vec<u8>, AccountId>,
-    hash_map: LookupMap<Vec<u8>, AccountId>,
+    tokens:    LookupMap<AccountId, TokenData>,
+    key_map:   LookupMap<Vec<u8>, AccountId>,
+    hash_map:  LookupMap<Vec<u8>, AccountId>,
     token_map: LookupMap<Vec<u8>, String>,
+
+    bank:      LookupMap<AccountId, Balance>,
 }
 
 impl Default for NFTBridge {
     fn default() -> Self {
         Self {
-            booted: false,
-            core: AccountId::new_unchecked("".to_string()),
-            dups: UnorderedSet::new(b"d".to_vec()),
-            owner_pk: env::signer_account_pk(),
+            booted:               false,
+            core:                 AccountId::new_unchecked("".to_string()),
+            gov_idx:              0,
+            dups:                 LookupMap::new(b"d".to_vec()),
+            owner_pk:             env::signer_account_pk(),
             emitter_registration: LookupMap::new(b"c".to_vec()),
-            last_asset: 0,
-            upgrade_hash: b"".to_vec(),
+            last_asset:           0,
+            upgrade_hash:         b"".to_vec(),
 
-            tokens: LookupMap::new(b"ta".to_vec()),
-            key_map: LookupMap::new(b"k".to_vec()),
-            hash_map: LookupMap::new(b"a".to_vec()),
+            tokens:    LookupMap::new(b"ta".to_vec()),
+            key_map:   LookupMap::new(b"k".to_vec()),
+            hash_map:  LookupMap::new(b"a".to_vec()),
             token_map: LookupMap::new(b"tm".to_vec()),
+
+            bank: LookupMap::new(b"b".to_vec()),
         }
     }
 }
@@ -208,7 +256,7 @@ fn vaa_governance(
 fn vaa_transfer(
     storage: &mut NFTBridge,
     vaa: &state::ParsedVAA,
-    action: u8,
+    _action: u8,
     mut deposit: Balance,
     refund_to: AccountId,
 ) -> PromiseOrValue<bool> {
@@ -300,17 +348,17 @@ fn vaa_transfer(
         let s = get_string_from_32(&symbol);
 
         let md = TokenMetadata {
-            title: Some(n.clone()),
-            description: Some(s.clone()),
-            media: Some(base_uri.clone()),
-            media_hash: Some(Base64VecU8::from(env::sha256(base_uri.as_bytes()))),
-            copies: Some(1u64),
-            issued_at: None,
-            expires_at: None,
-            starts_at: None,
-            updated_at: None,
-            extra: None,
-            reference: None,
+            title:          Some(n.clone()),
+            description:    Some(s.clone()),
+            media:          Some(base_uri.clone()),
+            media_hash:     Some(Base64VecU8::from(env::sha256(base_uri.as_bytes()))),
+            copies:         Some(1u64),
+            issued_at:      None,
+            expires_at:     None,
+            starts_at:      None,
+            updated_at:     None,
+            extra:          None,
+            reference:      None,
             reference_hash: None,
         };
 
@@ -326,12 +374,12 @@ fn vaa_transfer(
                 .nft_mint(token_id.clone(), recipient_account, md, refund_to.clone())
         } else {
             let ft = NFTContractMetadata {
-                spec: NFT_METADATA_SPEC.to_string(),
-                name: n.clone() + " (wormhole)",
-                symbol: s.clone(),
-                icon: None,
-                base_uri: None,
-                reference: None,
+                spec:           NFT_METADATA_SPEC.to_string(),
+                name:           n.clone() + " (wormhole)",
+                symbol:         s.clone(),
+                icon:           None,
+                base_uri:       None,
+                reference:      None,
                 reference_hash: None,
             };
 
@@ -343,9 +391,9 @@ fn vaa_transfer(
                 AccountId::new_unchecked(bridge_token_account.clone());
 
             let d = TokenData {
-                meta: reference,
+                meta:    reference,
                 address: hex::encode(nft_address),
-                chain: nft_chain,
+                chain:   nft_chain,
             };
 
             storage.tokens.insert(&bridge_token_account_id, &d);
@@ -527,46 +575,122 @@ impl NFTBridge {
         let h = hex::decode(vaa).expect("invalidVaa");
         let pvaa = state::ParsedVAA::parse(&h);
 
-        self.dups.contains(&pvaa.hash)
+        self.dups.contains_key(&pvaa.hash) && self.dups.get(&pvaa.hash).unwrap()
     }
 
     #[payable]
-    pub fn submit_vaa(&mut self, vaa: String) -> Promise {
-        let refund_to = env::predecessor_account_id();
-
-        if env::attached_deposit() < (TRANSFER_BUFFER * env::storage_byte_cost()) {
-            env::log_str(&format!(
-                "nft-bridge/{}#{}: submit_vaa: {}  {}",
-                file!(),
-                line!(),
-                env::attached_deposit(),
-                (TRANSFER_BUFFER * env::storage_byte_cost())
-            ));
-
-            refund_and_panic("StorageDepositUnderflow", &refund_to);
+    pub fn submit_vaa(
+        &mut self,
+        vaa: String,
+        mut refund_to: Option<AccountId>,
+    ) -> PromiseOrValue<bool> {
+        if refund_to == None {
+            refund_to = Some(env::predecessor_account_id());
         }
 
         if env::prepaid_gas() < Gas(300_000_000_000_000) {
-            refund_and_panic("NotEnoughGas", &refund_to);
+            env::panic_str("NotEnoughGas");
         }
 
-        ext_worm_hole::ext(self.core.clone())
-            .verify_vaa(vaa.clone())
-            .then(
-                Self::ext(env::current_account_id())
-                    .with_unused_gas_weight(10)
-                    .with_attached_deposit(env::attached_deposit())
-                    .submit_vaa_callback(vaa, env::predecessor_account_id()),
+        if env::attached_deposit() < (TRANSFER_BUFFER * env::storage_byte_cost()) {
+            env::panic_str("StorageDepositUnderflow");
+        }
+
+        let h = hex::decode(&vaa).unwrap();
+        let pvaa = state::ParsedVAA::parse(&h);
+
+        if pvaa.version != 1 {
+            env::panic_str("invalidVersion");
+        }
+
+        // Check if VAA with this hash was already accepted
+        if self.dups.contains_key(&pvaa.hash) {
+            let e = self.dups.get(&pvaa.hash).unwrap();
+            if e {
+                env::panic_str("alreadyExecuted");
+            } else {
+                self.dups.insert(&pvaa.hash, &true);
+                self.submit_vaa_work(&pvaa, refund_to.unwrap())
+            }
+        } else {
+            let r = refund_to.unwrap();
+            PromiseOrValue::Promise(
+                ext_worm_hole::ext(self.core.clone())
+                    .verify_vaa(vaa.clone())
+                    .then(
+                        Self::ext(env::current_account_id())
+                            .with_unused_gas_weight(10)
+                            .with_attached_deposit(env::attached_deposit())
+                            .verify_vaa_callback(pvaa.hash, r.clone()),
+                    )
+                    .then(
+                        Self::ext(env::current_account_id()).refunder(r, env::attached_deposit()),
+                    ),
             )
+        }
+    }
+
+    #[private]
+    pub fn refunder(&mut self, refund_to: AccountId, amt: Balance) {
+        if !is_promise_success() {
+            env::log_str(&format!(
+                "portal/{}#{}: refunding {} to {}?",
+                file!(),
+                line!(),
+                amt,
+                refund_to
+            ));
+            Promise::new(refund_to).transfer(amt);
+        }
+    }
+
+
+    #[private] // So, all of wormhole security rests in this one statement?
+    #[payable]
+    pub fn verify_vaa_callback(
+        &mut self,
+        hash: Vec<u8>,
+        refund_to: AccountId,
+        #[callback_result] gov_idx: Result<u32, PromiseError>,
+    ) -> Promise {
+        if gov_idx.is_err() {
+            env::panic_str("vaaVerifyFail");
+        }
+        self.gov_idx = gov_idx.unwrap();
+
+        // Check if VAA with this hash was already accepted
+        if self.dups.contains_key(&hash) {
+            env::panic_str("alreadyExecuted2");
+        }
+
+        let storage_used = env::storage_usage();
+        let mut deposit = env::attached_deposit();
+
+        self.dups.insert(&hash, &false);
+
+        let required_cost =
+            (Balance::from(env::storage_usage() - storage_used)) * env::storage_byte_cost();
+        if required_cost > deposit {
+            env::panic_str("DepositUnderflowForHash");
+        }
+        deposit -= required_cost;
+
+        env::log_str(&format!(
+            "portal/{}#{}: refunding {} to {}?",
+            file!(),
+            line!(),
+            deposit,
+            refund_to
+        ));
+        Promise::new(refund_to).transfer(deposit)
     }
 
     #[private] // So, all of wormhole security rests in this one statement?
     #[payable]
-    pub fn submit_vaa_callback(
+    fn submit_vaa_work(
         &mut self,
-        vaa: String,
+        pvaa: &state::ParsedVAA,
         refund_to: AccountId,
-        #[callback_result] gov_idx: Result<u32, PromiseError>,
     ) -> PromiseOrValue<bool> {
         env::log_str(&format!(
             "nft-bridge/{}#{}: submit_vaa_callback: {}  {} used: {}  prepaid: {}",
@@ -578,16 +702,8 @@ impl NFTBridge {
             serde_json::to_string(&env::prepaid_gas()).unwrap()
         ));
 
-        if gov_idx.is_err() {
-            refund_and_panic("vaaVerifyFail", &refund_to);
-        }
-
-        let h = hex::decode(&vaa).expect("invalidVaa");
-
-        let pvaa = state::ParsedVAA::parse(&h);
-
         if pvaa.version != 1 {
-            refund_and_panic("invalidVersion", &refund_to);
+            env::panic_str("invalidVersion");
         }
 
         let data: &[u8] = &pvaa.payload;
@@ -597,25 +713,10 @@ impl NFTBridge {
                 .unwrap();
         let action = data.get_u8(0);
 
-        let storage_used = env::storage_usage();
-
-        // Check if VAA with this hash was already accepted
-        if self.dups.contains(&pvaa.hash) {
-            refund_and_panic("alreadyExecuted", &refund_to);
-        }
-        self.dups.insert(&pvaa.hash);
-
-        let required_cost = (Balance::from(env::storage_usage()) - Balance::from(storage_used))
-            * env::storage_byte_cost();
-
-        let mut deposit = env::attached_deposit();
-        if required_cost > deposit {
-            refund_and_panic("DepositUnderflowForHash", &refund_to);
-        }
-        deposit -= required_cost;
+        let deposit = env::attached_deposit();
 
         if governance {
-            let bal = vaa_governance(self, &pvaa, gov_idx.unwrap(), deposit, &refund_to);
+            let bal = vaa_governance(self, pvaa, self.gov_idx, deposit, &refund_to);
             if bal > 0 {
                 env::log_str(&format!(
                     "nft-bridge/{}#{}: refunding {} to {}",
@@ -801,13 +902,13 @@ impl NFTBridge {
     #[private]
     pub fn initiate_transfer_wormhole(
         &mut self,
-        asset: AccountId,
-        token_id: TokenId,
+        _asset: AccountId,
+        _token_id: TokenId,
         recipient_chain: u16,
         recipient: String,
-        nonce: u32,
+        _nonce: u32,
         meta: String,
-        caller: AccountId,
+        _caller: AccountId,
     ) -> Promise {
         if !is_promise_success() {
             env::panic_str("Failed to burn NFT");
@@ -815,11 +916,13 @@ impl NFTBridge {
 
         let old = hex::decode(meta).unwrap();
 
-        let p = [old[0..(old.len() - 34)].to_vec(),
-                 vec![0; (64 - recipient.len()) / 2],
-                 hex::decode(recipient).unwrap(),
-                 (recipient_chain as u16).to_be_bytes().to_vec()
-        ] .concat();
+        let p = [
+            old[0..(old.len() - 34)].to_vec(),
+            vec![0; (64 - recipient.len()) / 2],
+            hex::decode(recipient).unwrap(),
+            (recipient_chain as u16).to_be_bytes().to_vec(),
+        ]
+        .concat();
 
         if old.len() != p.len() {
             refund_and_panic("formatting error", &env::predecessor_account_id());
