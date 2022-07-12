@@ -1,5 +1,5 @@
 #![allow(unused_mut)]
-#![allow(unused_imports)]
+//#![allow(unused_imports)]
 //#![allow(unused_variables)]
 //#![allow(dead_code)]
 
@@ -27,7 +27,6 @@ use {
         AccountId,
         Balance,
         Gas,
-        GasWeight,
         PanicOnDefault,
         Promise,
         PromiseError,
@@ -1017,6 +1016,10 @@ impl Portal {
         let h = hex::decode(&vaa).unwrap();
         let pvaa = state::ParsedVAA::parse(&h);
 
+        if pvaa.version != 1 {
+            env::panic_str("invalidVersion");
+        }
+
         // Check if VAA with this hash was already accepted
         if self.dups.contains_key(&pvaa.hash) {
             let e = self.dups.get(&pvaa.hash).unwrap();
@@ -1027,6 +1030,7 @@ impl Portal {
                 self.submit_vaa_work(&pvaa, refund_to.unwrap())
             }
         } else {
+            let r = refund_to.unwrap();
             PromiseOrValue::Promise(
                 ext_worm_hole::ext(self.core.clone())
                     .verify_vaa(vaa.clone())
@@ -1034,11 +1038,10 @@ impl Portal {
                         Self::ext(env::current_account_id())
                             .with_unused_gas_weight(10)
                             .with_attached_deposit(env::attached_deposit())
-                            .verify_vaa_callback(vaa, refund_to.unwrap()),
+                            .verify_vaa_callback(pvaa.hash, r.clone()),
                     )
                     .then(
-                        Self::ext(env::current_account_id())
-                            .refunder(env::predecessor_account_id(), env::attached_deposit()),
+                        Self::ext(env::current_account_id()).refunder(r, env::attached_deposit()),
                     ),
             )
         }
@@ -1063,41 +1066,24 @@ impl Portal {
     #[payable]
     pub fn verify_vaa_callback(
         &mut self,
-        vaa: String,
+        hash: Vec<u8>,
         refund_to: AccountId,
         #[callback_result] gov_idx: Result<u32, PromiseError>,
     ) -> Promise {
-        env::log_str(&format!(
-            "portal/{}#{}: submit_vaa_work: {}  {} used: {}  prepaid: {}",
-            file!(),
-            line!(),
-            env::attached_deposit(),
-            env::predecessor_account_id(),
-            serde_json::to_string(&env::used_gas()).unwrap(),
-            serde_json::to_string(&env::prepaid_gas()).unwrap()
-        ));
-
         if gov_idx.is_err() {
             env::panic_str("vaaVerifyFail");
         }
         self.gov_idx = gov_idx.unwrap();
 
-        let h = hex::decode(&vaa).unwrap();
-        let pvaa = state::ParsedVAA::parse(&h);
-
-        if pvaa.version != 1 {
-            env::panic_str("invalidVersion");
-        }
-
         // Check if VAA with this hash was already accepted
-        if self.dups.contains_key(&pvaa.hash) {
+        if self.dups.contains_key(&hash) {
             env::panic_str("alreadyExecuted2");
         }
 
         let storage_used = env::storage_usage();
         let mut deposit = env::attached_deposit();
 
-        self.dups.insert(&pvaa.hash, &false);
+        self.dups.insert(&hash, &false);
 
         let required_cost =
             (Balance::from(env::storage_usage() - storage_used)) * env::storage_byte_cost();
@@ -1146,7 +1132,7 @@ impl Portal {
         let deposit = env::attached_deposit();
 
         if governance {
-            let bal = vaa_governance(self, &pvaa, self.gov_idx, deposit);
+            let bal = vaa_governance(self, pvaa, self.gov_idx, deposit);
             if bal > 0 {
                 env::log_str(&format!(
                     "portal/{}#{}: refunding {} to {}",
@@ -1172,9 +1158,9 @@ impl Portal {
         }
 
         match action {
-            1u8 => vaa_transfer(self, &pvaa, action, deposit, refund_to.clone()),
-            2u8 => vaa_asset_meta(self, &pvaa, deposit, refund_to.clone()),
-            3u8 => vaa_transfer(self, &pvaa, action, deposit, refund_to.clone()),
+            1u8 => vaa_transfer(self, pvaa, action, deposit, refund_to),
+            2u8 => vaa_asset_meta(self, pvaa, deposit, refund_to),
+            3u8 => vaa_transfer(self, pvaa, action, deposit, refund_to),
             _ => {
                 env::panic_str("invalidPortAction");
             }
