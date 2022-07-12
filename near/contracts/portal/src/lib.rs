@@ -337,17 +337,9 @@ fn vaa_transfer(
     let mut prom;
 
     if action == 3 {
-        env::log_str(&format!(
-            "portal/{}#{}: vaa_transfer:  account:  {}    refund_to: {}   pred: {}   signer: {}  mr: {}",
-            file!(),
-            line!(),
-            account,
-            refund_to,
-            env::predecessor_account_id(),
-            env::signer_account_id(),
-            mr
-        ));
-        env::panic_str("Payload3NotImplemented");
+        if env::predecessor_account_id() != mr {
+            env::panic_str("Payload3 Violation");
+        }
     }
 
     if token_chain == CHAIN_ID_NEAR {
