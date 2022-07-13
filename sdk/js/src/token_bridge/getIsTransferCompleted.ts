@@ -172,8 +172,12 @@ export async function getIsTransferCompletedNear(
   tokenAccount: string,
   signedVAA: Uint8Array
 ): Promise<boolean> {
-    // Could we just pass in the vaa already as hex?
-    let vaa = Buffer.from(signedVAA).toString("hex");
+  // Could we just pass in the vaa already as hex?
+  let vaa = Buffer.from(signedVAA).toString("hex");
 
-    return client.viewFunction(tokenAccount, "is_transfer_completed", { vaa: vaa });
+  return (
+    await client.viewFunction(tokenAccount, "is_transfer_completed", {
+      vaa: vaa,
+    })
+  )[1];
 }

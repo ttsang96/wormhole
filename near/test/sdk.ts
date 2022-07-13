@@ -274,6 +274,14 @@ async function testNearSDK() {
 
   console.log("calling createWrappedOnNear to create usdc");
 
+  if (
+    (await getIsTransferCompletedNear(userAccount, token_bridge, usdcvaa)) ==
+    true
+  ) {
+    console.log("getIsTransferCompleted returned incorrect value (true)");
+    process.exit(1);
+  }
+
   let usdc = await createWrappedOnNear(userAccount, token_bridge, usdcvaa);
   console.log(usdc);
 
@@ -282,18 +290,26 @@ async function testNearSDK() {
     process.exit(1);
   }
 
-    let aname = await getForeignAssetNear(
-      userAccount,
-      token_bridge,
-      usdcp.FromChain as ChainId,
-      usdcp.Contract as string
-    );
-    if (aname != usdc) {
-      console.log(aname + " != " + usdc);
-      process.exit(1);
-    } else {
-      console.log(aname + " == " + usdc);
-    }
+  if (
+    (await getIsTransferCompletedNear(userAccount, token_bridge, usdcvaa)) ==
+    false
+  ) {
+    console.log("getIsTransferCompleted returned incorrect value (false)");
+    process.exit(1);
+  }
+
+  let aname = await getForeignAssetNear(
+    userAccount,
+    token_bridge,
+    usdcp.FromChain as ChainId,
+    usdcp.Contract as string
+  );
+  if (aname != usdc) {
+    console.log(aname + " != " + usdc);
+    process.exit(1);
+  } else {
+    console.log(aname + " == " + usdc);
+  }
 
   console.log("Creating USDC token on algorand");
   let tx = await createWrappedOnAlgorand(
@@ -343,7 +359,12 @@ async function testNearSDK() {
   let nativeAttest;
   {
     console.log("attesting: " + randoToken);
-    let s = await attestTokenFromNear(userAccount, core_bridge, token_bridge, randoToken);
+    let s = await attestTokenFromNear(
+      userAccount,
+      core_bridge,
+      token_bridge,
+      randoToken
+    );
     console.log(s);
     const { vaaBytes: signedVAA } = await getSignedVAAWithRetry(
       ["http://localhost:7071"],
@@ -435,7 +456,13 @@ async function testNearSDK() {
 
   let wrappedTransfer;
   {
-    console.log("transfer wrapped token from near to algorand", userAccount, core_bridge, token_bridge, usdc);
+    console.log(
+      "transfer wrapped token from near to algorand",
+      userAccount,
+      core_bridge,
+      token_bridge,
+      usdc
+    );
 
     let s = await transferTokenFromNear(
       userAccount,

@@ -84,8 +84,6 @@ export async function createWrappedOnNear(
 
   let res = await client.viewFunction(tokenBridge, "deposit_estimates", {});
 
-  console.log(res);
-
   let result = await client.functionCall({
     contractId: tokenBridge,
     methodName: "submit_vaa",

@@ -571,11 +571,15 @@ impl NFTBridge {
         }
     }
 
-    pub fn is_transfer_completed(&self, vaa: String) -> bool {
+    pub fn is_transfer_completed(&self, vaa: String) -> (bool, bool) {
         let h = hex::decode(vaa).expect("invalidVaa");
         let pvaa = state::ParsedVAA::parse(&h);
 
-        self.dups.contains_key(&pvaa.hash) && self.dups.get(&pvaa.hash).unwrap()
+        if self.dups.contains_key(&pvaa.hash) {
+            (true, self.dups.get(&pvaa.hash).unwrap())
+        } else {
+            (false, false)
+        }
     }
 
     #[payable]
