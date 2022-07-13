@@ -294,6 +294,20 @@ async function testNearSDK() {
 
   console.log(ret);
 
+  ret = nearAPI.providers.getTransactionLastResult(
+    await userAccount.functionCall({
+      contractId: config.nftAccount,
+      methodName: "submit_vaa",
+      args: {
+        vaa: v,
+      },
+      gas: 300000000000000,
+      attachedDeposit: new BN(res[1]),
+    })
+  );
+
+  console.log(ret);
+
   console.log("make it go away");
 
   let t = nearAPI.providers.getTransactionLastResult(
