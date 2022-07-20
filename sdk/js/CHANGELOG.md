@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.5.2
+
+### Changed
+
+Added chain ids for Arbitrum, Optimism, and Gnosis
+
+## 0.5.1
+
+### Changed
+
+Added chain ids for Injective, Osmosis, Sui, and Aptos
+	
 ## 0.5.0
 
 ### Changed
