@@ -3,7 +3,7 @@ package common
 import (
 	"time"
 
-	"github.com/ttsang96e/wormhole/node/pkg/vaa"
+	"github.com/certusone/wormhole/node/pkg/vaa"
 
 	"github.com/ethereum/go-ethereum/common"
 )

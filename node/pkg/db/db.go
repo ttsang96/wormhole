@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/certusone/wormhole/node/pkg/vaa"
 	"github.com/dgraph-io/badger/v3"
-	"github.com/ttsang96e/wormhole/node/pkg/vaa"
 )
 
 type Database struct {

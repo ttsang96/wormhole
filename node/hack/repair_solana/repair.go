@@ -11,13 +11,13 @@ import (
 	"strings"
 	"time"
 
+	"github.com/certusone/wormhole/node/pkg/common"
+	"github.com/certusone/wormhole/node/pkg/db"
+	gossipv1 "github.com/certusone/wormhole/node/pkg/proto/gossip/v1"
+	nodev1 "github.com/certusone/wormhole/node/pkg/proto/node/v1"
+	"github.com/certusone/wormhole/node/pkg/vaa"
 	"github.com/gagliardetto/solana-go"
 	"github.com/gagliardetto/solana-go/rpc"
-	"github.com/ttsang96e/wormhole/node/pkg/common"
-	"github.com/ttsang96e/wormhole/node/pkg/db"
-	gossipv1 "github.com/ttsang96e/wormhole/node/pkg/proto/gossip/v1"
-	nodev1 "github.com/ttsang96e/wormhole/node/pkg/proto/node/v1"
-	"github.com/ttsang96e/wormhole/node/pkg/vaa"
 	"golang.org/x/time/rate"
 	"google.golang.org/grpc"
 )

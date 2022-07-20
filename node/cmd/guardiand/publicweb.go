@@ -7,10 +7,10 @@ import (
 	"net/http"
 	"strings"
 
+	publicrpcv1 "github.com/certusone/wormhole/node/pkg/proto/publicrpc/v1"
+	"github.com/certusone/wormhole/node/pkg/supervisor"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/improbable-eng/grpc-web/go/grpcweb"
-	publicrpcv1 "github.com/ttsang96e/wormhole/node/pkg/proto/publicrpc/v1"
-	"github.com/ttsang96e/wormhole/node/pkg/supervisor"
 	"go.uber.org/zap"
 	"golang.org/x/crypto/acme"
 	"golang.org/x/crypto/acme/autocert"

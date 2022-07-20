@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/ttsang96e/wormhole/node/pkg/common"
-	nodev1 "github.com/ttsang96e/wormhole/node/pkg/proto/node/v1"
-	"github.com/ttsang96e/wormhole/node/pkg/vaa"
+	"github.com/certusone/wormhole/node/pkg/common"
+	nodev1 "github.com/certusone/wormhole/node/pkg/proto/node/v1"
+	"github.com/certusone/wormhole/node/pkg/vaa"
 	"google.golang.org/grpc"
 )
 

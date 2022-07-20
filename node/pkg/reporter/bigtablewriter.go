@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/ttsang96e/wormhole/node/pkg/supervisor"
-	"github.com/ttsang96e/wormhole/node/pkg/vaa"
+	"github.com/certusone/wormhole/node/pkg/supervisor"
+	"github.com/certusone/wormhole/node/pkg/vaa"
 	"go.uber.org/zap"
 	"google.golang.org/api/option"
 
