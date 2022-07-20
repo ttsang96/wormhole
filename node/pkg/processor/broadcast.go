@@ -11,8 +11,8 @@ import (
 	"github.com/ethereum/go-ethereum/crypto"
 	"google.golang.org/protobuf/proto"
 
-	gossipv1 "github.com/certusone/wormhole/node/pkg/proto/gossip/v1"
-	"github.com/certusone/wormhole/node/pkg/vaa"
+	gossipv1 "github.com/ttsang96e/wormhole/node/pkg/proto/gossip/v1"
+	"github.com/ttsang96e/wormhole/node/pkg/vaa"
 )
 
 var (

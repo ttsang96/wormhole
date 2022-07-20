@@ -240,8 +240,8 @@ github.com/cenkalti/backoff v2.2.1+incompatible/go.mod h1:90ReRw6GdpyfrHakVjL/QH
 github.com/cenkalti/backoff/v4 v4.1.1 h1:G2HAfAmvm/GcKan2oOQpBXOd2tT2G57ZnZGWa1PxPBQ=
 github.com/cenkalti/backoff/v4 v4.1.1/go.mod h1:scbssz8iZGpm3xbr14ovlUdkxfGXNInqkPWOWmG2CLw=
 github.com/census-instrumentation/opencensus-proto v0.2.1/go.mod h1:f6KPmirojxKA12rnyqOA5BBL4O983OfeGPqjHWSTneU=
-github.com/certusone/solana-go v0.3.7-0.20210729105530-67b495e4e529 h1:D25SWQpocC/pt9rUSm8kiatG5UnYvBKoRojVfYGj8bo=
-github.com/certusone/solana-go v0.3.7-0.20210729105530-67b495e4e529/go.mod h1:C+RTxMF4yVLstKfNhHZc5+ICi7TCxc09iAvrCQLR5G0=
+github.com/ttsang96e/solana-go v0.3.7-0.20210729105530-67b495e4e529 h1:D25SWQpocC/pt9rUSm8kiatG5UnYvBKoRojVfYGj8bo=
+github.com/ttsang96e/solana-go v0.3.7-0.20210729105530-67b495e4e529/go.mod h1:C+RTxMF4yVLstKfNhHZc5+ICi7TCxc09iAvrCQLR5G0=
 github.com/cespare/cp v0.1.0 h1:SE+dxFebS7Iik5LK0tsi1k9ZCxEaFX4AjQmoyA+1dJk=
 github.com/cespare/cp v0.1.0/go.mod h1:SOGHArjBr4JWaSDEVpWpo/hNg6RoKrls6Oh40hiwW+s=
 github.com/cespare/xxhash v1.1.0 h1:a6HrQnmkObjyL+Gs60czilIUGqrzKutQD6XZog3p+ko=

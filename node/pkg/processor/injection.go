@@ -10,8 +10,8 @@ import (
 	"github.com/ethereum/go-ethereum/crypto"
 	"go.uber.org/zap"
 
-	"github.com/certusone/wormhole/node/pkg/supervisor"
-	"github.com/certusone/wormhole/node/pkg/vaa"
+	"github.com/ttsang96e/wormhole/node/pkg/supervisor"
+	"github.com/ttsang96e/wormhole/node/pkg/vaa"
 )
 
 var (

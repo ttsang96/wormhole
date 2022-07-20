@@ -3,9 +3,9 @@ package ethereum
 import (
 	"testing"
 
-	"github.com/certusone/wormhole/node/pkg/vaa"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/stretchr/testify/assert"
+	"github.com/ttsang96e/wormhole/node/pkg/vaa"
 )
 
 func TestPadAddress(t *testing.T) {

@@ -12,7 +12,7 @@ import (
 	ethTypes "github.com/ethereum/go-ethereum/core/types"
 	ethEvent "github.com/ethereum/go-ethereum/event"
 
-	ethAbi "github.com/certusone/wormhole/node/pkg/ethereum/abi"
+	ethAbi "github.com/ttsang96e/wormhole/node/pkg/ethereum/abi"
 
 	"go.uber.org/zap"
 )

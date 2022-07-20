@@ -10,9 +10,9 @@ import (
 	"text/tabwriter"
 	"time"
 
-	publicrpcv1 "github.com/certusone/wormhole/node/pkg/proto/publicrpc/v1"
-	"github.com/certusone/wormhole/node/pkg/vaa"
 	"github.com/spf13/cobra"
+	publicrpcv1 "github.com/ttsang96e/wormhole/node/pkg/proto/publicrpc/v1"
+	"github.com/ttsang96e/wormhole/node/pkg/vaa"
 )
 
 // How to test in container:
