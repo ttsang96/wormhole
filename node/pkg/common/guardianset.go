@@ -5,7 +5,8 @@ import (
 	"sync"
 	"time"
 
-	gossipv1 "github.com/certusone/wormhole/node/pkg/proto/gossip/v1"
+	gossipv1 "node/proto/gossip/v1"
+
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/libp2p/go-libp2p-core/peer"
 

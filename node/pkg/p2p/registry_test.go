@@ -5,8 +5,10 @@ import (
 	"crypto/rand"
 	"testing"
 
-	gossipv1 "github.com/certusone/wormhole/node/pkg/proto/gossip/v1"
-	"github.com/certusone/wormhole/node/pkg/vaa"
+	gossipv1 "node/proto/gossip/v1"
+
+	"node/pkg/vaa"
+
 	"github.com/mr-tron/base58"
 	"github.com/stretchr/testify/assert"
 )

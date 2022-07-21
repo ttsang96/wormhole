@@ -9,12 +9,14 @@ import (
 	"os"
 	"sync"
 
-	"github.com/certusone/wormhole/node/pkg/common"
-	"github.com/certusone/wormhole/node/pkg/p2p"
-	gossipv1 "github.com/certusone/wormhole/node/pkg/proto/gossip/v1"
-	spyv1 "github.com/certusone/wormhole/node/pkg/proto/spy/v1"
-	"github.com/certusone/wormhole/node/pkg/supervisor"
-	"github.com/certusone/wormhole/node/pkg/vaa"
+	gossipv1 "node/proto/gossip/v1"
+	spyv1 "node/proto/spy/v1"
+
+	"node/pkg/common"
+	"node/pkg/p2p"
+	"node/pkg/supervisor"
+	"node/pkg/vaa"
+
 	"github.com/google/uuid"
 	"github.com/gorilla/mux"
 	ipfslog "github.com/ipfs/go-log/v2"

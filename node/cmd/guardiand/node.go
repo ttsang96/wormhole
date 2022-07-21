@@ -12,10 +12,11 @@ import (
 	"path"
 	"strings"
 
-	"github.com/certusone/wormhole/node/pkg/db"
-	"github.com/certusone/wormhole/node/pkg/notify/discord"
-	"github.com/certusone/wormhole/node/pkg/telemetry"
-	"github.com/certusone/wormhole/node/pkg/version"
+	"node/pkg/db"
+	"node/pkg/notify/discord"
+	"node/pkg/telemetry"
+	"node/pkg/version"
+
 	"github.com/gagliardetto/solana-go/rpc"
 	"go.uber.org/zap/zapcore"
 
@@ -23,17 +24,19 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 
-	"github.com/certusone/wormhole/node/pkg/common"
-	"github.com/certusone/wormhole/node/pkg/devnet"
-	"github.com/certusone/wormhole/node/pkg/ethereum"
-	"github.com/certusone/wormhole/node/pkg/p2p"
-	"github.com/certusone/wormhole/node/pkg/processor"
-	gossipv1 "github.com/certusone/wormhole/node/pkg/proto/gossip/v1"
-	"github.com/certusone/wormhole/node/pkg/readiness"
-	"github.com/certusone/wormhole/node/pkg/reporter"
-	solana "github.com/certusone/wormhole/node/pkg/solana"
-	"github.com/certusone/wormhole/node/pkg/supervisor"
-	"github.com/certusone/wormhole/node/pkg/vaa"
+	gossipv1 "node/proto/gossip/v1"
+
+	"node/pkg/common"
+	"node/pkg/devnet"
+	"node/pkg/ethereum"
+	"node/pkg/p2p"
+	"node/pkg/processor"
+	"node/pkg/readiness"
+	"node/pkg/reporter"
+	solana "node/pkg/solana"
+	"node/pkg/supervisor"
+	"node/pkg/vaa"
+
 	eth_common "github.com/ethereum/go-ethereum/common"
 	ethcrypto "github.com/ethereum/go-ethereum/crypto"
 	"github.com/libp2p/go-libp2p-core/crypto"
@@ -41,9 +44,9 @@ import (
 	"github.com/spf13/cobra"
 	"go.uber.org/zap"
 
-	cosmwasm "github.com/certusone/wormhole/node/pkg/terra"
+	cosmwasm "node/pkg/terra"
 
-	"github.com/certusone/wormhole/node/pkg/algorand"
+	"node/pkg/algorand"
 
 	ipfslog "github.com/ipfs/go-log/v2"
 )

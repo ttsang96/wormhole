@@ -5,9 +5,11 @@ import (
 	"regexp"
 	"strconv"
 
-	gossipv1 "github.com/certusone/wormhole/node/pkg/proto/gossip/v1"
-	"github.com/certusone/wormhole/node/pkg/vaa"
-	"github.com/certusone/wormhole/node/pkg/version"
+	gossipv1 "node/proto/gossip/v1"
+
+	"node/pkg/vaa"
+	"node/pkg/version"
+
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/libp2p/go-libp2p-core/peer"
 	"github.com/prometheus/client_golang/prometheus"

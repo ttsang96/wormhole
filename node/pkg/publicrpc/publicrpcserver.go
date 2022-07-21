@@ -5,10 +5,12 @@ import (
 	"encoding/hex"
 	"fmt"
 
-	"github.com/certusone/wormhole/node/pkg/common"
-	"github.com/certusone/wormhole/node/pkg/db"
-	publicrpcv1 "github.com/certusone/wormhole/node/pkg/proto/publicrpc/v1"
-	"github.com/certusone/wormhole/node/pkg/vaa"
+	publicrpcv1 "node/proto/publicrpc/v1"
+
+	"node/pkg/common"
+	"node/pkg/db"
+	"node/pkg/vaa"
+
 	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"

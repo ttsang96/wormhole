@@ -1,4 +1,4 @@
-module github.com/certusone/wormhole/node/tools
+module node/tools
 
 go 1.17
 

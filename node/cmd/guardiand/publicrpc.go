@@ -4,11 +4,13 @@ import (
 	"fmt"
 	"net"
 
-	"github.com/certusone/wormhole/node/pkg/common"
-	"github.com/certusone/wormhole/node/pkg/db"
-	publicrpcv1 "github.com/certusone/wormhole/node/pkg/proto/publicrpc/v1"
-	"github.com/certusone/wormhole/node/pkg/publicrpc"
-	"github.com/certusone/wormhole/node/pkg/supervisor"
+	publicrpcv1 "node/proto/publicrpc/v1"
+
+	"node/pkg/common"
+	"node/pkg/db"
+	"node/pkg/publicrpc"
+	"node/pkg/supervisor"
+
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 )

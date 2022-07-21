@@ -14,19 +14,22 @@ import (
 	"os"
 	"time"
 
-	"github.com/certusone/wormhole/node/pkg/db"
-	gossipv1 "github.com/certusone/wormhole/node/pkg/proto/gossip/v1"
-	publicrpcv1 "github.com/certusone/wormhole/node/pkg/proto/publicrpc/v1"
-	"github.com/certusone/wormhole/node/pkg/publicrpc"
+	gossipv1 "node/proto/gossip/v1"
+	publicrpcv1 "node/proto/publicrpc/v1"
+
+	"node/pkg/db"
+	"node/pkg/publicrpc"
+
 	ethcommon "github.com/ethereum/go-ethereum/common"
 	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	"github.com/certusone/wormhole/node/pkg/common"
-	nodev1 "github.com/certusone/wormhole/node/pkg/proto/node/v1"
-	"github.com/certusone/wormhole/node/pkg/supervisor"
-	"github.com/certusone/wormhole/node/pkg/vaa"
+	nodev1 "node/proto/node/v1"
+
+	"node/pkg/common"
+	"node/pkg/supervisor"
+	"node/pkg/vaa"
 )
 
 type nodePrivilegedService struct {

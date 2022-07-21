@@ -3,7 +3,7 @@ package common
 import (
 	"fmt"
 
-	"github.com/certusone/wormhole/node/pkg/vaa"
+	"node/pkg/vaa"
 )
 
 // PublicRPCEndpoints is a list of known public RPC endpoints for mainnet, operated by

@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/certusone/wormhole/node/pkg/common"
-	"github.com/certusone/wormhole/node/pkg/vaa"
+	"node/pkg/common"
+	"node/pkg/vaa"
+
 	eth_common "github.com/ethereum/go-ethereum/common"
 )
 

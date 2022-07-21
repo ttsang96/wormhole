@@ -6,7 +6,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/certusone/wormhole/node/pkg/vaa"
+	"node/pkg/vaa"
+
 	"github.com/dgraph-io/badger/v3"
 )
 

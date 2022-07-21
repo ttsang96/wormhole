@@ -8,9 +8,10 @@ import (
 	"strings"
 	"time"
 
-	node_common "github.com/certusone/wormhole/node/pkg/common"
-	"github.com/certusone/wormhole/node/pkg/vaa"
-	"github.com/certusone/wormhole/node/pkg/version"
+	node_common "node/pkg/common"
+	"node/pkg/vaa"
+	"node/pkg/version"
+
 	"github.com/ethereum/go-ethereum/common"
 	ethcrypto "github.com/ethereum/go-ethereum/crypto"
 	"github.com/prometheus/client_golang/prometheus"
@@ -32,8 +33,9 @@ import (
 	"go.uber.org/zap"
 	"google.golang.org/protobuf/proto"
 
-	gossipv1 "github.com/certusone/wormhole/node/pkg/proto/gossip/v1"
-	"github.com/certusone/wormhole/node/pkg/supervisor"
+	gossipv1 "node/proto/gossip/v1"
+
+	"node/pkg/supervisor"
 )
 
 var (

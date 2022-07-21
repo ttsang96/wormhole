@@ -1,4 +1,4 @@
-module github.com/certusone/wormhole/node
+module node
 
 go 1.17
 
@@ -46,7 +46,7 @@ require (
 	golang.org/x/sys v0.0.0-20211019181941-9d821ace8654
 	golang.org/x/time v0.0.0-20210723032227-1f47c861a9ac
 	google.golang.org/api v0.58.0
-	google.golang.org/genproto v0.0.0-20211019152133-63b7e35f4404
+	google.golang.org/genproto v0.0.0-20211019152133-63b7e35f4404 // indirect
 	google.golang.org/grpc v1.42.0
 	google.golang.org/protobuf v1.27.1
 	nhooyr.io/websocket v1.8.7 // indirect

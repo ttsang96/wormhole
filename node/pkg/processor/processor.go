@@ -5,19 +5,20 @@ import (
 	"crypto/ecdsa"
 	"time"
 
-	"github.com/certusone/wormhole/node/pkg/notify/discord"
+	"node/pkg/notify/discord"
 
-	"github.com/certusone/wormhole/node/pkg/db"
+	"node/pkg/db"
 
 	ethcommon "github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
 	"go.uber.org/zap"
 
-	"github.com/certusone/wormhole/node/pkg/common"
-	gossipv1 "github.com/certusone/wormhole/node/pkg/proto/gossip/v1"
-	"github.com/certusone/wormhole/node/pkg/reporter"
-	"github.com/certusone/wormhole/node/pkg/supervisor"
-	"github.com/certusone/wormhole/node/pkg/vaa"
+	gossipv1 "node/proto/gossip/v1"
+
+	"node/pkg/common"
+	"node/pkg/reporter"
+	"node/pkg/supervisor"
+	"node/pkg/vaa"
 )
 
 type (

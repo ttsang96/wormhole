@@ -14,17 +14,18 @@ import (
 	"github.com/mr-tron/base58"
 	"github.com/spf13/pflag"
 
-	"github.com/certusone/wormhole/node/pkg/common"
-	gossipv1 "github.com/certusone/wormhole/node/pkg/proto/gossip/v1"
-	publicrpcv1 "github.com/certusone/wormhole/node/pkg/proto/publicrpc/v1"
-	"github.com/certusone/wormhole/node/pkg/vaa"
+	gossipv1 "node/proto/gossip/v1"
+	publicrpcv1 "node/proto/publicrpc/v1"
+
+	"node/pkg/common"
+	"node/pkg/vaa"
 
 	"github.com/spf13/cobra"
 	"github.com/status-im/keycard-go/hexutils"
 	"google.golang.org/grpc"
 	"google.golang.org/protobuf/encoding/prototext"
 
-	nodev1 "github.com/certusone/wormhole/node/pkg/proto/node/v1"
+	nodev1 "node/proto/node/v1"
 )
 
 var (
