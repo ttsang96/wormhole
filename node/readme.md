@@ -20,3 +20,11 @@
 - git clone https://github.com/googleapis/googleapis.git       
 
 - cp googleapis/google > google
+
+
+'''
+
+Run a node 
+./node node --unsafeDevMode --guardianKey key --nodeName node1
+
+'''
