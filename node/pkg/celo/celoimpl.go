@@ -15,9 +15,9 @@ import (
 	ethTypes "github.com/ethereum/go-ethereum/core/types"
 	ethEvent "github.com/ethereum/go-ethereum/event"
 
-	celoAbi "github.com/certusone/wormhole/node/pkg/celo/abi"
-	common "github.com/certusone/wormhole/node/pkg/common"
-	ethAbi "github.com/certusone/wormhole/node/pkg/ethereum/abi"
+	celoAbi "wormhole/node/pkg/celo/abi"
+	common "wormhole/node/pkg/common"
+	ethAbi "wormhole/node/pkg/ethereum/abi"
 
 	"go.uber.org/zap"
 )

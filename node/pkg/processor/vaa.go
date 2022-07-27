@@ -3,7 +3,8 @@ package processor
 import (
 	"encoding/hex"
 
-	"github.com/certusone/wormhole/node/pkg/vaa"
+	"wormhole/node/pkg/vaa"
+
 	"go.uber.org/zap"
 )
 

@@ -7,8 +7,10 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/certusone/wormhole/node/pkg/p2p"
-	gossipv1 "github.com/certusone/wormhole/node/pkg/proto/gossip/v1"
+	gossipv1 "wormhole/node/proto/gossip/v1"
+
+	"wormhole/node/pkg/p2p"
+
 	"github.com/ethereum/go-ethereum/rpc"
 	"github.com/prometheus/client_golang/prometheus/promauto"
 
@@ -17,12 +19,12 @@ import (
 	eth_common "github.com/ethereum/go-ethereum/common"
 	"go.uber.org/zap"
 
-	"github.com/certusone/wormhole/node/pkg/celo"
-	"github.com/certusone/wormhole/node/pkg/common"
-	"github.com/certusone/wormhole/node/pkg/ethereum/abi"
-	"github.com/certusone/wormhole/node/pkg/readiness"
-	"github.com/certusone/wormhole/node/pkg/supervisor"
-	"github.com/certusone/wormhole/node/pkg/vaa"
+	"wormhole/node/pkg/celo"
+	"wormhole/node/pkg/common"
+	"wormhole/node/pkg/ethereum/abi"
+	"wormhole/node/pkg/readiness"
+	"wormhole/node/pkg/supervisor"
+	"wormhole/node/pkg/vaa"
 )
 
 var (

@@ -61,10 +61,12 @@ import (
 	"sort"
 	"time"
 
-	"github.com/certusone/wormhole/node/pkg/db"
-	gossipv1 "github.com/certusone/wormhole/node/pkg/proto/gossip/v1"
-	publicrpcv1 "github.com/certusone/wormhole/node/pkg/proto/publicrpc/v1"
-	"github.com/certusone/wormhole/node/pkg/vaa"
+	gossipv1 "wormhole/node/proto/gossip/v1"
+	publicrpcv1 "wormhole/node/proto/publicrpc/v1"
+
+	"wormhole/node/pkg/db"
+	"wormhole/node/pkg/vaa"
+
 	"go.uber.org/zap"
 
 	"github.com/prometheus/client_golang/prometheus"

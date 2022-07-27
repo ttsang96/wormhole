@@ -4,7 +4,7 @@ import (
 	"encoding/hex"
 	"fmt"
 
-	"github.com/certusone/wormhole/node/pkg/vaa"
+	"wormhole/node/pkg/vaa"
 )
 
 // PublicRPCEndpoints is a list of known public RPC endpoints for mainnet, operated by

@@ -10,7 +10,8 @@ import (
 	"context"
 	"time"
 
-	common "github.com/certusone/wormhole/node/pkg/common"
+	common "wormhole/node/pkg/common"
+
 	ethRpc "github.com/ethereum/go-ethereum/rpc"
 	"go.uber.org/zap"
 )

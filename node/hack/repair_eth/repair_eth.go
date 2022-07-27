@@ -14,12 +14,15 @@ import (
 	"strings"
 	"time"
 
-	"github.com/certusone/wormhole/node/pkg/common"
-	"github.com/certusone/wormhole/node/pkg/db"
-	"github.com/certusone/wormhole/node/pkg/ethereum/abi"
-	gossipv1 "github.com/certusone/wormhole/node/pkg/proto/gossip/v1"
-	nodev1 "github.com/certusone/wormhole/node/pkg/proto/node/v1"
-	"github.com/certusone/wormhole/node/pkg/vaa"
+	gossipv1 "wormhole/node/proto/gossip/v1"
+
+	nodev1 "wormhole/node/proto/node/v1"
+
+	"wormhole/node/pkg/common"
+	"wormhole/node/pkg/db"
+	"wormhole/node/pkg/ethereum/abi"
+	"wormhole/node/pkg/vaa"
+
 	abi2 "github.com/ethereum/go-ethereum/accounts/abi"
 	eth_common "github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"

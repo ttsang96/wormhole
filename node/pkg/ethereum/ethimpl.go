@@ -12,8 +12,8 @@ import (
 	ethClient "github.com/ethereum/go-ethereum/ethclient"
 	ethEvent "github.com/ethereum/go-ethereum/event"
 
-	common "github.com/certusone/wormhole/node/pkg/common"
-	ethAbi "github.com/certusone/wormhole/node/pkg/ethereum/abi"
+	common "wormhole/node/pkg/common"
+	ethAbi "wormhole/node/pkg/ethereum/abi"
 
 	"go.uber.org/zap"
 )

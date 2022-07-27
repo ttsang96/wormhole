@@ -10,10 +10,11 @@ import (
 	"flag"
 	"log"
 
-	"github.com/certusone/wormhole/node/pkg/celo"
-	"github.com/certusone/wormhole/node/pkg/common"
-	"github.com/certusone/wormhole/node/pkg/ethereum"
-	"github.com/certusone/wormhole/node/pkg/vaa"
+	"wormhole/node/pkg/celo"
+	"wormhole/node/pkg/common"
+	"wormhole/node/pkg/ethereum"
+	"wormhole/node/pkg/vaa"
+
 	ethCommon "github.com/ethereum/go-ethereum/common"
 )
 

@@ -3,7 +3,7 @@
 package governor
 
 import (
-	"github.com/certusone/wormhole/node/pkg/vaa"
+	"wormhole/node/pkg/vaa"
 )
 
 func (gov *ChainGovernor) initTestnetConfig() ([]tokenConfigEntry, []chainConfigEntry) {

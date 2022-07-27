@@ -3,7 +3,8 @@ package ethereum
 import (
 	"testing"
 
-	"github.com/certusone/wormhole/node/pkg/vaa"
+	"wormhole/node/pkg/vaa"
+
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/stretchr/testify/assert"
 )

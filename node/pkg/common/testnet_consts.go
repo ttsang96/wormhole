@@ -1,6 +1,6 @@
 package common
 
-import "github.com/certusone/wormhole/node/pkg/vaa"
+import "wormhole/node/pkg/vaa"
 
 // KnownTestnetEmitters is a list of known emitters on the various L1 testnets.
 var KnownTestnetEmitters = buildKnownEmitters(knownTestnetTokenbridgeEmitters, knownTestnetNFTBridgeEmitters)

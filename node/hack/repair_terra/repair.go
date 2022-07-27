@@ -13,14 +13,17 @@ import (
 
 	"time"
 
-	"github.com/certusone/wormhole/node/pkg/common"
-	"github.com/certusone/wormhole/node/pkg/db"
+	"wormhole/node/pkg/common"
+	"wormhole/node/pkg/db"
+
 	"go.uber.org/zap"
 
-	gossipv1 "github.com/certusone/wormhole/node/pkg/proto/gossip/v1"
-	nodev1 "github.com/certusone/wormhole/node/pkg/proto/node/v1"
-	cosmwasm "github.com/certusone/wormhole/node/pkg/terra"
-	"github.com/certusone/wormhole/node/pkg/vaa"
+	gossipv1 "wormhole/node/proto/gossip/v1"
+
+	nodev1 "wormhole/node/proto/node/v1"
+
+	cosmwasm "wormhole/node/pkg/terra"
+	"wormhole/node/pkg/vaa"
 
 	"github.com/tidwall/gjson"
 	"golang.org/x/time/rate"

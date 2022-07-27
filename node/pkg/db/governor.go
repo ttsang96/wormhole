@@ -6,8 +6,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/certusone/wormhole/node/pkg/common"
-	"github.com/certusone/wormhole/node/pkg/vaa"
+	"wormhole/node/pkg/common"
+	"wormhole/node/pkg/vaa"
+
 	"github.com/dgraph-io/badger/v3"
 
 	"go.uber.org/zap"

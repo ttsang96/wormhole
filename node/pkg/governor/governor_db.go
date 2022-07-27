@@ -6,9 +6,9 @@ import (
 	"sort"
 	"time"
 
-	"github.com/certusone/wormhole/node/pkg/common"
-	"github.com/certusone/wormhole/node/pkg/db"
-	"github.com/certusone/wormhole/node/pkg/vaa"
+	"wormhole/node/pkg/common"
+	"wormhole/node/pkg/db"
+	"wormhole/node/pkg/vaa"
 
 	"go.uber.org/zap"
 )

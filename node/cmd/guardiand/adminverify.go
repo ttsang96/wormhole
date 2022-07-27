@@ -7,13 +7,13 @@ import (
 	"log"
 	"time"
 
-	"github.com/certusone/wormhole/node/pkg/vaa"
+	"wormhole/node/pkg/vaa"
 
 	"github.com/davecgh/go-spew/spew"
 	"github.com/spf13/cobra"
 	"google.golang.org/protobuf/encoding/prototext"
 
-	nodev1 "github.com/certusone/wormhole/node/pkg/proto/node/v1"
+	nodev1 "wormhole/node/proto/node/v1"
 )
 
 var AdminClientGovernanceVAAVerifyCmd = &cobra.Command{

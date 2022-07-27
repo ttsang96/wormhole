@@ -4,16 +4,16 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/certusone/wormhole/node/cmd/debug"
-	"github.com/certusone/wormhole/node/cmd/spy"
-	"github.com/certusone/wormhole/node/pkg/version"
+	"wormhole/node/cmd/debug"
+	"wormhole/node/cmd/spy"
+	"wormhole/node/pkg/version"
 
 	"github.com/spf13/cobra"
 
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/viper"
 
-	"github.com/certusone/wormhole/node/cmd/guardiand"
+	"wormhole/node/cmd/guardiand"
 )
 
 var cfgFile string

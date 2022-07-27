@@ -4,8 +4,9 @@ import (
 	"encoding/hex"
 	"flag"
 
-	"github.com/certusone/wormhole/node/pkg/notify/discord"
-	"github.com/certusone/wormhole/node/pkg/vaa"
+	"wormhole/node/pkg/notify/discord"
+	"wormhole/node/pkg/vaa"
+
 	"go.uber.org/zap"
 )
 

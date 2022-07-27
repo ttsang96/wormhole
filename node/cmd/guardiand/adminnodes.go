@@ -10,8 +10,10 @@ import (
 	"text/tabwriter"
 	"time"
 
-	publicrpcv1 "github.com/certusone/wormhole/node/pkg/proto/publicrpc/v1"
-	"github.com/certusone/wormhole/node/pkg/vaa"
+	publicrpcv1 "wormhole/node/proto/publicrpc/v1"
+
+	"wormhole/node/pkg/vaa"
+
 	"github.com/spf13/cobra"
 )
 

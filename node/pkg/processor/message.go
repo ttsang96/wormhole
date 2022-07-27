@@ -4,7 +4,8 @@ import (
 	"context"
 	"encoding/hex"
 
-	"github.com/certusone/wormhole/node/pkg/db"
+	"wormhole/node/pkg/db"
+
 	"github.com/mr-tron/base58"
 
 	"github.com/prometheus/client_golang/prometheus"
@@ -13,10 +14,10 @@ import (
 	"github.com/ethereum/go-ethereum/crypto"
 	"go.uber.org/zap"
 
-	"github.com/certusone/wormhole/node/pkg/common"
-	"github.com/certusone/wormhole/node/pkg/reporter"
-	"github.com/certusone/wormhole/node/pkg/supervisor"
-	"github.com/certusone/wormhole/node/pkg/vaa"
+	"wormhole/node/pkg/common"
+	"wormhole/node/pkg/reporter"
+	"wormhole/node/pkg/supervisor"
+	"wormhole/node/pkg/vaa"
 )
 
 var (

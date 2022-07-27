@@ -13,9 +13,9 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/certusone/wormhole/node/pkg/common"
-	"github.com/certusone/wormhole/node/pkg/db"
-	"github.com/certusone/wormhole/node/pkg/vaa"
+	"wormhole/node/pkg/common"
+	"wormhole/node/pkg/db"
+	"wormhole/node/pkg/vaa"
 )
 
 // This is so we can have consistent config data for unit tests.

@@ -9,15 +9,16 @@ import (
 	"log"
 	"os"
 
-	"github.com/certusone/wormhole/node/pkg/common"
+	"wormhole/node/pkg/common"
 
 	ethcrypto "github.com/ethereum/go-ethereum/crypto"
 	"github.com/spf13/cobra"
 	"golang.org/x/crypto/openpgp/armor" //nolint
 	"google.golang.org/protobuf/proto"
 
-	"github.com/certusone/wormhole/node/pkg/devnet"
-	nodev1 "github.com/certusone/wormhole/node/pkg/proto/node/v1"
+	nodev1 "wormhole/node/proto/node/v1"
+
+	"wormhole/node/pkg/devnet"
 )
 
 var keyDescription *string
