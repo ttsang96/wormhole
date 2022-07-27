@@ -10,7 +10,6 @@ import (
 	"flag"
 	"log"
 
-	"wormhole/node/pkg/celo"
 	"wormhole/node/pkg/common"
 	"wormhole/node/pkg/ethereum"
 	"wormhole/node/pkg/vaa"
@@ -37,7 +36,7 @@ func main() {
 
 	var ethIntf common.Ethish
 	if chainID == vaa.ChainIDCelo {
-		ethIntf = &celo.CeloImpl{NetworkName: "celo"}
+		// ethIntf = &celo.CeloImpl{NetworkName: "celo"}
 	} else {
 		ethIntf = &ethereum.EthImpl{NetworkName: "eth"}
 	}

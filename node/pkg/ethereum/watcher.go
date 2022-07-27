@@ -19,7 +19,6 @@ import (
 	eth_common "github.com/ethereum/go-ethereum/common"
 	"go.uber.org/zap"
 
-	"wormhole/node/pkg/celo"
 	"wormhole/node/pkg/common"
 	"wormhole/node/pkg/ethereum/abi"
 	"wormhole/node/pkg/readiness"
@@ -135,7 +134,7 @@ func NewEthWatcher(
 	if chainID == vaa.ChainIDCelo && !unsafeDevMode {
 		// When we are running in mainnet or testnet, we need to use the Celo ethereum library rather than go-ethereum.
 		// However, in devnet, we currently run the standard ETH node for Celo, so we need to use the standard go-ethereum.
-		ethIntf = &celo.CeloImpl{NetworkName: networkName}
+		// ethIntf = &celo.CeloImpl{NetworkName: networkName}
 	} else if chainID == vaa.ChainIDMoonbeam && !unsafeDevMode {
 		ethIntf = &PollImpl{BaseEth: EthImpl{NetworkName: networkName}, Finalizer: &MoonbeamFinalizer{}, DelayInMs: 250}
 	} else if chainID == vaa.ChainIDNeon {

@@ -5,5 +5,7 @@ import (
 )
 
 func main() {
+	print("ExecuteC")
+
 	cmd.Execute()
 }
