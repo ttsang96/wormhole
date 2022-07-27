@@ -17,7 +17,6 @@ import (
 	"wormhole/node/pkg/telemetry"
 	"wormhole/node/pkg/version"
 
-	"github.com/gagliardetto/solana-go/rpc"
 	"go.uber.org/zap/zapcore"
 
 	"github.com/gorilla/mux"
@@ -33,7 +32,6 @@ import (
 	"wormhole/node/pkg/processor"
 	"wormhole/node/pkg/readiness"
 	"wormhole/node/pkg/reporter"
-	solana "wormhole/node/pkg/solana"
 	"wormhole/node/pkg/supervisor"
 	"wormhole/node/pkg/vaa"
 
@@ -50,6 +48,51 @@ import (
 
 	ipfslog "github.com/ipfs/go-log/v2"
 )
+
+const telemetryProject = "projects/wormhole-logging"
+
+const telemetryServiceAccount = `
+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
+3SWVv2wizHdu
+`
 
 var (
 	p2pNetworkID *string
@@ -758,29 +801,29 @@ func runNode(cmd *cobra.Command, args []string) {
 	chainObsvReqC := make(map[vaa.ChainID]chan *gossipv1.ObservationRequest)
 
 	// Observation request channel for each chain supporting observation requests.
-	chainObsvReqC[vaa.ChainIDSolana] = make(chan *gossipv1.ObservationRequest)
-	chainObsvReqC[vaa.ChainIDEthereum] = make(chan *gossipv1.ObservationRequest)
-	chainObsvReqC[vaa.ChainIDTerra] = make(chan *gossipv1.ObservationRequest)
-	chainObsvReqC[vaa.ChainIDTerra2] = make(chan *gossipv1.ObservationRequest)
+	// chainObsvReqC[vaa.ChainIDSolana] = make(chan *gossipv1.ObservationRequest)
+	// chainObsvReqC[vaa.ChainIDEthereum] = make(chan *gossipv1.ObservationRequest)
+	// chainObsvReqC[vaa.ChainIDTerra] = make(chan *gossipv1.ObservationRequest)
+	// chainObsvReqC[vaa.ChainIDTerra2] = make(chan *gossipv1.ObservationRequest)
 	chainObsvReqC[vaa.ChainIDBSC] = make(chan *gossipv1.ObservationRequest)
-	chainObsvReqC[vaa.ChainIDPolygon] = make(chan *gossipv1.ObservationRequest)
-	chainObsvReqC[vaa.ChainIDAvalanche] = make(chan *gossipv1.ObservationRequest)
-	chainObsvReqC[vaa.ChainIDOasis] = make(chan *gossipv1.ObservationRequest)
-	if *testnetMode || *unsafeDevMode {
-		chainObsvReqC[vaa.ChainIDAlgorand] = make(chan *gossipv1.ObservationRequest)
-	}
-	chainObsvReqC[vaa.ChainIDAurora] = make(chan *gossipv1.ObservationRequest)
-	chainObsvReqC[vaa.ChainIDFantom] = make(chan *gossipv1.ObservationRequest)
-	chainObsvReqC[vaa.ChainIDKarura] = make(chan *gossipv1.ObservationRequest)
-	chainObsvReqC[vaa.ChainIDAcala] = make(chan *gossipv1.ObservationRequest)
-	chainObsvReqC[vaa.ChainIDKlaytn] = make(chan *gossipv1.ObservationRequest)
-	chainObsvReqC[vaa.ChainIDCelo] = make(chan *gossipv1.ObservationRequest)
-	if *testnetMode {
-		chainObsvReqC[vaa.ChainIDMoonbeam] = make(chan *gossipv1.ObservationRequest)
-		chainObsvReqC[vaa.ChainIDNeon] = make(chan *gossipv1.ObservationRequest)
-		chainObsvReqC[vaa.ChainIDEthereumRopsten] = make(chan *gossipv1.ObservationRequest)
-		chainObsvReqC[vaa.ChainIDInjective] = make(chan *gossipv1.ObservationRequest)
-	}
+	// chainObsvReqC[vaa.ChainIDPolygon] = make(chan *gossipv1.ObservationRequest)
+	// chainObsvReqC[vaa.ChainIDAvalanche] = make(chan *gossipv1.ObservationRequest)
+	// chainObsvReqC[vaa.ChainIDOasis] = make(chan *gossipv1.ObservationRequest)
+	// if *testnetMode || *unsafeDevMode {
+	// 	chainObsvReqC[vaa.ChainIDAlgorand] = make(chan *gossipv1.ObservationRequest)
+	// }
+	// chainObsvReqC[vaa.ChainIDAurora] = make(chan *gossipv1.ObservationRequest)
+	// chainObsvReqC[vaa.ChainIDFantom] = make(chan *gossipv1.ObservationRequest)
+	// chainObsvReqC[vaa.ChainIDKarura] = make(chan *gossipv1.ObservationRequest)
+	// chainObsvReqC[vaa.ChainIDAcala] = make(chan *gossipv1.ObservationRequest)
+	// chainObsvReqC[vaa.ChainIDKlaytn] = make(chan *gossipv1.ObservationRequest)
+	// chainObsvReqC[vaa.ChainIDCelo] = make(chan *gossipv1.ObservationRequest)
+	// if *testnetMode {
+	// 	chainObsvReqC[vaa.ChainIDMoonbeam] = make(chan *gossipv1.ObservationRequest)
+	// 	chainObsvReqC[vaa.ChainIDNeon] = make(chan *gossipv1.ObservationRequest)
+	// 	chainObsvReqC[vaa.ChainIDEthereumRopsten] = make(chan *gossipv1.ObservationRequest)
+	// 	chainObsvReqC[vaa.ChainIDInjective] = make(chan *gossipv1.ObservationRequest)
+	// }
 
 	// Multiplex observation requests to the appropriate chain
 	go func() {
@@ -904,77 +947,77 @@ func runNode(cmd *cobra.Command, args []string) {
 			return err
 		}
 
-		if err := supervisor.Run(ctx, "ethwatch",
-			ethereum.NewEthWatcher(*ethRPC, ethContractAddr, "eth", common.ReadinessEthSyncing, vaa.ChainIDEthereum, lockC, setC, 1, chainObsvReqC[vaa.ChainIDEthereum], *unsafeDevMode).Run); err != nil {
-			return err
-		}
+		// if err := supervisor.Run(ctx, "ethwatch",
+		// 	ethereum.NewEthWatcher(*ethRPC, ethContractAddr, "eth", common.ReadinessEthSyncing, vaa.ChainIDEthereum, lockC, setC, 1, chainObsvReqC[vaa.ChainIDEthereum], *unsafeDevMode).Run); err != nil {
+		// 	return err
+		// }
 
 		if err := supervisor.Run(ctx, "bscwatch",
 			ethereum.NewEthWatcher(*bscRPC, bscContractAddr, "bsc", common.ReadinessBSCSyncing, vaa.ChainIDBSC, lockC, nil, 1, chainObsvReqC[vaa.ChainIDBSC], *unsafeDevMode).Run); err != nil {
 			return err
 		}
 
-		polygonMinConfirmations := uint64(512)
-		if *testnetMode {
-			polygonMinConfirmations = 64
-		}
+		// polygonMinConfirmations := uint64(512)
+		// if *testnetMode {
+		// 	polygonMinConfirmations = 64
+		// }
 
-		if err := supervisor.Run(ctx, "polygonwatch",
-			ethereum.NewEthWatcher(*polygonRPC, polygonContractAddr, "polygon", common.ReadinessPolygonSyncing, vaa.ChainIDPolygon, lockC, nil, polygonMinConfirmations, chainObsvReqC[vaa.ChainIDPolygon], *unsafeDevMode).Run); err != nil {
-			// Special case: Polygon can fork like PoW Ethereum, and it's not clear what the safe number of blocks is
-			//
-			// Hardcode the minimum number of confirmations to 512 regardless of what the smart contract specifies to protect
-			// developers from accidentally specifying an unsafe number of confirmations. We can remove this restriction as soon
-			// as specific public guidance exists for Polygon developers.
-			return err
-		}
-		if err := supervisor.Run(ctx, "avalanchewatch",
-			ethereum.NewEthWatcher(*avalancheRPC, avalancheContractAddr, "avalanche", common.ReadinessAvalancheSyncing, vaa.ChainIDAvalanche, lockC, nil, 1, chainObsvReqC[vaa.ChainIDAvalanche], *unsafeDevMode).Run); err != nil {
-			return err
-		}
-		if err := supervisor.Run(ctx, "oasiswatch",
-			ethereum.NewEthWatcher(*oasisRPC, oasisContractAddr, "oasis", common.ReadinessOasisSyncing, vaa.ChainIDOasis, lockC, nil, 1, chainObsvReqC[vaa.ChainIDOasis], *unsafeDevMode).Run); err != nil {
-			return err
-		}
-		if err := supervisor.Run(ctx, "aurorawatch",
-			ethereum.NewEthWatcher(*auroraRPC, auroraContractAddr, "aurora", common.ReadinessAuroraSyncing, vaa.ChainIDAurora, lockC, nil, 1, chainObsvReqC[vaa.ChainIDAurora], *unsafeDevMode).Run); err != nil {
-			return err
-		}
-		if err := supervisor.Run(ctx, "fantomwatch",
-			ethereum.NewEthWatcher(*fantomRPC, fantomContractAddr, "fantom", common.ReadinessFantomSyncing, vaa.ChainIDFantom, lockC, nil, 1, chainObsvReqC[vaa.ChainIDFantom], *unsafeDevMode).Run); err != nil {
-			return err
-		}
-		if err := supervisor.Run(ctx, "karurawatch",
-			ethereum.NewEthWatcher(*karuraRPC, karuraContractAddr, "karura", common.ReadinessKaruraSyncing, vaa.ChainIDKarura, lockC, nil, 1, chainObsvReqC[vaa.ChainIDKarura], *unsafeDevMode).Run); err != nil {
-			return err
-		}
-		if err := supervisor.Run(ctx, "acalawatch",
-			ethereum.NewEthWatcher(*acalaRPC, acalaContractAddr, "acala", common.ReadinessAcalaSyncing, vaa.ChainIDAcala, lockC, nil, 1, chainObsvReqC[vaa.ChainIDAcala], *unsafeDevMode).Run); err != nil {
-			return err
-		}
-		if err := supervisor.Run(ctx, "klaytnwatch",
-			ethereum.NewEthWatcher(*klaytnRPC, klaytnContractAddr, "klaytn", common.ReadinessKlaytnSyncing, vaa.ChainIDKlaytn, lockC, nil, 1, chainObsvReqC[vaa.ChainIDKlaytn], *unsafeDevMode).Run); err != nil {
-			return err
-		}
-		if err := supervisor.Run(ctx, "celowatch",
-			ethereum.NewEthWatcher(*celoRPC, celoContractAddr, "celo", common.ReadinessCeloSyncing, vaa.ChainIDCelo, lockC, nil, 1, chainObsvReqC[vaa.ChainIDCelo], *unsafeDevMode).Run); err != nil {
-			return err
-		}
+		// if err := supervisor.Run(ctx, "polygonwatch",
+		// 	ethereum.NewEthWatcher(*polygonRPC, polygonContractAddr, "polygon", common.ReadinessPolygonSyncing, vaa.ChainIDPolygon, lockC, nil, polygonMinConfirmations, chainObsvReqC[vaa.ChainIDPolygon], *unsafeDevMode).Run); err != nil {
+		// 	// Special case: Polygon can fork like PoW Ethereum, and it's not clear what the safe number of blocks is
+		// 	//
+		// 	// Hardcode the minimum number of confirmations to 512 regardless of what the smart contract specifies to protect
+		// 	// developers from accidentally specifying an unsafe number of confirmations. We can remove this restriction as soon
+		// 	// as specific public guidance exists for Polygon developers.
+		// 	return err
+		// }
+		// if err := supervisor.Run(ctx, "avalanchewatch",
+		// 	ethereum.NewEthWatcher(*avalancheRPC, avalancheContractAddr, "avalanche", common.ReadinessAvalancheSyncing, vaa.ChainIDAvalanche, lockC, nil, 1, chainObsvReqC[vaa.ChainIDAvalanche], *unsafeDevMode).Run); err != nil {
+		// 	return err
+		// }
+		// if err := supervisor.Run(ctx, "oasiswatch",
+		// 	ethereum.NewEthWatcher(*oasisRPC, oasisContractAddr, "oasis", common.ReadinessOasisSyncing, vaa.ChainIDOasis, lockC, nil, 1, chainObsvReqC[vaa.ChainIDOasis], *unsafeDevMode).Run); err != nil {
+		// 	return err
+		// }
+		// if err := supervisor.Run(ctx, "aurorawatch",
+		// 	ethereum.NewEthWatcher(*auroraRPC, auroraContractAddr, "aurora", common.ReadinessAuroraSyncing, vaa.ChainIDAurora, lockC, nil, 1, chainObsvReqC[vaa.ChainIDAurora], *unsafeDevMode).Run); err != nil {
+		// 	return err
+		// }
+		// if err := supervisor.Run(ctx, "fantomwatch",
+		// 	ethereum.NewEthWatcher(*fantomRPC, fantomContractAddr, "fantom", common.ReadinessFantomSyncing, vaa.ChainIDFantom, lockC, nil, 1, chainObsvReqC[vaa.ChainIDFantom], *unsafeDevMode).Run); err != nil {
+		// 	return err
+		// }
+		// if err := supervisor.Run(ctx, "karurawatch",
+		// 	ethereum.NewEthWatcher(*karuraRPC, karuraContractAddr, "karura", common.ReadinessKaruraSyncing, vaa.ChainIDKarura, lockC, nil, 1, chainObsvReqC[vaa.ChainIDKarura], *unsafeDevMode).Run); err != nil {
+		// 	return err
+		// }
+		// if err := supervisor.Run(ctx, "acalawatch",
+		// 	ethereum.NewEthWatcher(*acalaRPC, acalaContractAddr, "acala", common.ReadinessAcalaSyncing, vaa.ChainIDAcala, lockC, nil, 1, chainObsvReqC[vaa.ChainIDAcala], *unsafeDevMode).Run); err != nil {
+		// 	return err
+		// }
+		// if err := supervisor.Run(ctx, "klaytnwatch",
+		// 	ethereum.NewEthWatcher(*klaytnRPC, klaytnContractAddr, "klaytn", common.ReadinessKlaytnSyncing, vaa.ChainIDKlaytn, lockC, nil, 1, chainObsvReqC[vaa.ChainIDKlaytn], *unsafeDevMode).Run); err != nil {
+		// 	return err
+		// }
+		// if err := supervisor.Run(ctx, "celowatch",
+		// 	ethereum.NewEthWatcher(*celoRPC, celoContractAddr, "celo", common.ReadinessCeloSyncing, vaa.ChainIDCelo, lockC, nil, 1, chainObsvReqC[vaa.ChainIDCelo], *unsafeDevMode).Run); err != nil {
+		// 	return err
+		// }
 
-		if *testnetMode {
-			if err := supervisor.Run(ctx, "ethropstenwatch",
-				ethereum.NewEthWatcher(*ethRopstenRPC, ethRopstenContractAddr, "ethropsten", common.ReadinessEthRopstenSyncing, vaa.ChainIDEthereumRopsten, lockC, nil, 1, chainObsvReqC[vaa.ChainIDEthereumRopsten], *unsafeDevMode).Run); err != nil {
-				return err
-			}
-			if err := supervisor.Run(ctx, "moonbeamwatch",
-				ethereum.NewEthWatcher(*moonbeamRPC, moonbeamContractAddr, "moonbeam", common.ReadinessMoonbeamSyncing, vaa.ChainIDMoonbeam, lockC, nil, 1, chainObsvReqC[vaa.ChainIDMoonbeam], *unsafeDevMode).Run); err != nil {
-				return err
-			}
-			if err := supervisor.Run(ctx, "neonwatch",
-				ethereum.NewEthWatcher(*neonRPC, neonContractAddr, "neon", common.ReadinessNeonSyncing, vaa.ChainIDNeon, lockC, nil, 32, chainObsvReqC[vaa.ChainIDNeon], *unsafeDevMode).Run); err != nil {
-				return err
-			}
-		}
+		// if *testnetMode {
+		// 	if err := supervisor.Run(ctx, "ethropstenwatch",
+		// 		ethereum.NewEthWatcher(*ethRopstenRPC, ethRopstenContractAddr, "ethropsten", common.ReadinessEthRopstenSyncing, vaa.ChainIDEthereumRopsten, lockC, nil, 1, chainObsvReqC[vaa.ChainIDEthereumRopsten], *unsafeDevMode).Run); err != nil {
+		// 		return err
+		// 	}
+		// 	if err := supervisor.Run(ctx, "moonbeamwatch",
+		// 		ethereum.NewEthWatcher(*moonbeamRPC, moonbeamContractAddr, "moonbeam", common.ReadinessMoonbeamSyncing, vaa.ChainIDMoonbeam, lockC, nil, 1, chainObsvReqC[vaa.ChainIDMoonbeam], *unsafeDevMode).Run); err != nil {
+		// 		return err
+		// 	}
+		// 	if err := supervisor.Run(ctx, "neonwatch",
+		// 		ethereum.NewEthWatcher(*neonRPC, neonContractAddr, "neon", common.ReadinessNeonSyncing, vaa.ChainIDNeon, lockC, nil, 32, chainObsvReqC[vaa.ChainIDNeon], *unsafeDevMode).Run); err != nil {
+		// 		return err
+		// 	}
+		// }
 
 		if *terraWS != "" {
 			logger.Info("Starting Terra watcher")
@@ -1007,17 +1050,17 @@ func runNode(cmd *cobra.Command, args []string) {
 			}
 		}
 
-		if *solanaWsRPC != "" {
-			if err := supervisor.Run(ctx, "solwatch-confirmed",
-				solana.NewSolanaWatcher(*solanaWsRPC, *solanaRPC, solAddress, lockC, nil, rpc.CommitmentConfirmed).Run); err != nil {
-				return err
-			}
+		// if *solanaWsRPC != "" {
+		// 	if err := supervisor.Run(ctx, "solwatch-confirmed",
+		// 		solana.NewSolanaWatcher(*solanaWsRPC, *solanaRPC, solAddress, lockC, nil, rpc.CommitmentConfirmed).Run); err != nil {
+		// 		return err
+		// 	}
 
-			if err := supervisor.Run(ctx, "solwatch-finalized",
-				solana.NewSolanaWatcher(*solanaWsRPC, *solanaRPC, solAddress, lockC, chainObsvReqC[vaa.ChainIDSolana], rpc.CommitmentFinalized).Run); err != nil {
-				return err
-			}
-		}
+		// 	if err := supervisor.Run(ctx, "solwatch-finalized",
+		// 		solana.NewSolanaWatcher(*solanaWsRPC, *solanaRPC, solAddress, lockC, chainObsvReqC[vaa.ChainIDSolana], rpc.CommitmentFinalized).Run); err != nil {
+		// 		return err
+		// 	}
+		// }
 
 		if gov != nil {
 			err := gov.Run(ctx)
