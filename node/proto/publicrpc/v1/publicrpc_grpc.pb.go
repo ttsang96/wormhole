@@ -28,6 +28,9 @@ type PublicRPCServiceClient interface {
 	GetLastHeartbeats(ctx context.Context, in *GetLastHeartbeatsRequest, opts ...grpc.CallOption) (*GetLastHeartbeatsResponse, error)
 	GetSignedVAA(ctx context.Context, in *GetSignedVAARequest, opts ...grpc.CallOption) (*GetSignedVAAResponse, error)
 	GetCurrentGuardianSet(ctx context.Context, in *GetCurrentGuardianSetRequest, opts ...grpc.CallOption) (*GetCurrentGuardianSetResponse, error)
+	GovernorGetAvailableNotionalByChain(ctx context.Context, in *GovernorGetAvailableNotionalByChainRequest, opts ...grpc.CallOption) (*GovernorGetAvailableNotionalByChainResponse, error)
+	GovernorGetEnqueuedVAAs(ctx context.Context, in *GovernorGetEnqueuedVAAsRequest, opts ...grpc.CallOption) (*GovernorGetEnqueuedVAAsResponse, error)
+	GovernorGetTokenList(ctx context.Context, in *GovernorGetTokenListRequest, opts ...grpc.CallOption) (*GovernorGetTokenListResponse, error)
 }
 
 type publicRPCServiceClient struct {
@@ -65,6 +68,33 @@ func (c *publicRPCServiceClient) GetCurrentGuardianSet(ctx context.Context, in *
 	return out, nil
 }
 
+func (c *publicRPCServiceClient) GovernorGetAvailableNotionalByChain(ctx context.Context, in *GovernorGetAvailableNotionalByChainRequest, opts ...grpc.CallOption) (*GovernorGetAvailableNotionalByChainResponse, error) {
+	out := new(GovernorGetAvailableNotionalByChainResponse)
+	err := c.cc.Invoke(ctx, "/publicrpc.v1.PublicRPCService/GovernorGetAvailableNotionalByChain", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *publicRPCServiceClient) GovernorGetEnqueuedVAAs(ctx context.Context, in *GovernorGetEnqueuedVAAsRequest, opts ...grpc.CallOption) (*GovernorGetEnqueuedVAAsResponse, error) {
+	out := new(GovernorGetEnqueuedVAAsResponse)
+	err := c.cc.Invoke(ctx, "/publicrpc.v1.PublicRPCService/GovernorGetEnqueuedVAAs", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *publicRPCServiceClient) GovernorGetTokenList(ctx context.Context, in *GovernorGetTokenListRequest, opts ...grpc.CallOption) (*GovernorGetTokenListResponse, error) {
+	out := new(GovernorGetTokenListResponse)
+	err := c.cc.Invoke(ctx, "/publicrpc.v1.PublicRPCService/GovernorGetTokenList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PublicRPCServiceServer is the server API for PublicRPCService service.
 // All implementations must embed UnimplementedPublicRPCServiceServer
 // for forward compatibility
@@ -75,6 +105,9 @@ type PublicRPCServiceServer interface {
 	GetLastHeartbeats(context.Context, *GetLastHeartbeatsRequest) (*GetLastHeartbeatsResponse, error)
 	GetSignedVAA(context.Context, *GetSignedVAARequest) (*GetSignedVAAResponse, error)
 	GetCurrentGuardianSet(context.Context, *GetCurrentGuardianSetRequest) (*GetCurrentGuardianSetResponse, error)
+	GovernorGetAvailableNotionalByChain(context.Context, *GovernorGetAvailableNotionalByChainRequest) (*GovernorGetAvailableNotionalByChainResponse, error)
+	GovernorGetEnqueuedVAAs(context.Context, *GovernorGetEnqueuedVAAsRequest) (*GovernorGetEnqueuedVAAsResponse, error)
+	GovernorGetTokenList(context.Context, *GovernorGetTokenListRequest) (*GovernorGetTokenListResponse, error)
 	mustEmbedUnimplementedPublicRPCServiceServer()
 }
 
@@ -90,6 +123,15 @@ func (UnimplementedPublicRPCServiceServer) GetSignedVAA(context.Context, *GetSig
 }
 func (UnimplementedPublicRPCServiceServer) GetCurrentGuardianSet(context.Context, *GetCurrentGuardianSetRequest) (*GetCurrentGuardianSetResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCurrentGuardianSet not implemented")
+}
+func (UnimplementedPublicRPCServiceServer) GovernorGetAvailableNotionalByChain(context.Context, *GovernorGetAvailableNotionalByChainRequest) (*GovernorGetAvailableNotionalByChainResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GovernorGetAvailableNotionalByChain not implemented")
+}
+func (UnimplementedPublicRPCServiceServer) GovernorGetEnqueuedVAAs(context.Context, *GovernorGetEnqueuedVAAsRequest) (*GovernorGetEnqueuedVAAsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GovernorGetEnqueuedVAAs not implemented")
+}
+func (UnimplementedPublicRPCServiceServer) GovernorGetTokenList(context.Context, *GovernorGetTokenListRequest) (*GovernorGetTokenListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GovernorGetTokenList not implemented")
 }
 func (UnimplementedPublicRPCServiceServer) mustEmbedUnimplementedPublicRPCServiceServer() {}
 
@@ -158,6 +200,60 @@ func _PublicRPCService_GetCurrentGuardianSet_Handler(srv interface{}, ctx contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PublicRPCService_GovernorGetAvailableNotionalByChain_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GovernorGetAvailableNotionalByChainRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PublicRPCServiceServer).GovernorGetAvailableNotionalByChain(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/publicrpc.v1.PublicRPCService/GovernorGetAvailableNotionalByChain",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PublicRPCServiceServer).GovernorGetAvailableNotionalByChain(ctx, req.(*GovernorGetAvailableNotionalByChainRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PublicRPCService_GovernorGetEnqueuedVAAs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GovernorGetEnqueuedVAAsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PublicRPCServiceServer).GovernorGetEnqueuedVAAs(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/publicrpc.v1.PublicRPCService/GovernorGetEnqueuedVAAs",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PublicRPCServiceServer).GovernorGetEnqueuedVAAs(ctx, req.(*GovernorGetEnqueuedVAAsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PublicRPCService_GovernorGetTokenList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GovernorGetTokenListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PublicRPCServiceServer).GovernorGetTokenList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/publicrpc.v1.PublicRPCService/GovernorGetTokenList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PublicRPCServiceServer).GovernorGetTokenList(ctx, req.(*GovernorGetTokenListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // PublicRPCService_ServiceDesc is the grpc.ServiceDesc for PublicRPCService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -176,6 +272,18 @@ var PublicRPCService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetCurrentGuardianSet",
 			Handler:    _PublicRPCService_GetCurrentGuardianSet_Handler,
+		},
+		{
+			MethodName: "GovernorGetAvailableNotionalByChain",
+			Handler:    _PublicRPCService_GovernorGetAvailableNotionalByChain_Handler,
+		},
+		{
+			MethodName: "GovernorGetEnqueuedVAAs",
+			Handler:    _PublicRPCService_GovernorGetEnqueuedVAAs_Handler,
+		},
+		{
+			MethodName: "GovernorGetTokenList",
+			Handler:    _PublicRPCService_GovernorGetTokenList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -39,6 +39,14 @@ type NodePrivilegedServiceClient interface {
 	// using the node's guardian key. The network rate limits these requests to one per second.
 	// Requests at higher rates will fail silently.
 	SendObservationRequest(ctx context.Context, in *SendObservationRequestRequest, opts ...grpc.CallOption) (*SendObservationRequestResponse, error)
+	// ChainGovernorStatus displays the status of the chain governor.
+	ChainGovernorStatus(ctx context.Context, in *ChainGovernorStatusRequest, opts ...grpc.CallOption) (*ChainGovernorStatusResponse, error)
+	// ChainGovernorReload clears the chain governor history and reloads it from the database.
+	ChainGovernorReload(ctx context.Context, in *ChainGovernorReloadRequest, opts ...grpc.CallOption) (*ChainGovernorReloadResponse, error)
+	// ChainGovernorDropPendingVAA drops a VAA from the chain governor pending list.
+	ChainGovernorDropPendingVAA(ctx context.Context, in *ChainGovernorDropPendingVAARequest, opts ...grpc.CallOption) (*ChainGovernorDropPendingVAAResponse, error)
+	// ChainGovernorReleasePendingVAA release a VAA from the chain governor pending list, publishing it immediately.
+	ChainGovernorReleasePendingVAA(ctx context.Context, in *ChainGovernorReleasePendingVAARequest, opts ...grpc.CallOption) (*ChainGovernorReleasePendingVAAResponse, error)
 }
 
 type nodePrivilegedServiceClient struct {
@@ -76,6 +84,42 @@ func (c *nodePrivilegedServiceClient) SendObservationRequest(ctx context.Context
 	return out, nil
 }
 
+func (c *nodePrivilegedServiceClient) ChainGovernorStatus(ctx context.Context, in *ChainGovernorStatusRequest, opts ...grpc.CallOption) (*ChainGovernorStatusResponse, error) {
+	out := new(ChainGovernorStatusResponse)
+	err := c.cc.Invoke(ctx, "/node.v1.NodePrivilegedService/ChainGovernorStatus", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *nodePrivilegedServiceClient) ChainGovernorReload(ctx context.Context, in *ChainGovernorReloadRequest, opts ...grpc.CallOption) (*ChainGovernorReloadResponse, error) {
+	out := new(ChainGovernorReloadResponse)
+	err := c.cc.Invoke(ctx, "/node.v1.NodePrivilegedService/ChainGovernorReload", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *nodePrivilegedServiceClient) ChainGovernorDropPendingVAA(ctx context.Context, in *ChainGovernorDropPendingVAARequest, opts ...grpc.CallOption) (*ChainGovernorDropPendingVAAResponse, error) {
+	out := new(ChainGovernorDropPendingVAAResponse)
+	err := c.cc.Invoke(ctx, "/node.v1.NodePrivilegedService/ChainGovernorDropPendingVAA", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *nodePrivilegedServiceClient) ChainGovernorReleasePendingVAA(ctx context.Context, in *ChainGovernorReleasePendingVAARequest, opts ...grpc.CallOption) (*ChainGovernorReleasePendingVAAResponse, error) {
+	out := new(ChainGovernorReleasePendingVAAResponse)
+	err := c.cc.Invoke(ctx, "/node.v1.NodePrivilegedService/ChainGovernorReleasePendingVAA", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // NodePrivilegedServiceServer is the server API for NodePrivilegedService service.
 // All implementations must embed UnimplementedNodePrivilegedServiceServer
 // for forward compatibility
@@ -97,6 +141,14 @@ type NodePrivilegedServiceServer interface {
 	// using the node's guardian key. The network rate limits these requests to one per second.
 	// Requests at higher rates will fail silently.
 	SendObservationRequest(context.Context, *SendObservationRequestRequest) (*SendObservationRequestResponse, error)
+	// ChainGovernorStatus displays the status of the chain governor.
+	ChainGovernorStatus(context.Context, *ChainGovernorStatusRequest) (*ChainGovernorStatusResponse, error)
+	// ChainGovernorReload clears the chain governor history and reloads it from the database.
+	ChainGovernorReload(context.Context, *ChainGovernorReloadRequest) (*ChainGovernorReloadResponse, error)
+	// ChainGovernorDropPendingVAA drops a VAA from the chain governor pending list.
+	ChainGovernorDropPendingVAA(context.Context, *ChainGovernorDropPendingVAARequest) (*ChainGovernorDropPendingVAAResponse, error)
+	// ChainGovernorReleasePendingVAA release a VAA from the chain governor pending list, publishing it immediately.
+	ChainGovernorReleasePendingVAA(context.Context, *ChainGovernorReleasePendingVAARequest) (*ChainGovernorReleasePendingVAAResponse, error)
 	mustEmbedUnimplementedNodePrivilegedServiceServer()
 }
 
@@ -112,6 +164,18 @@ func (UnimplementedNodePrivilegedServiceServer) FindMissingMessages(context.Cont
 }
 func (UnimplementedNodePrivilegedServiceServer) SendObservationRequest(context.Context, *SendObservationRequestRequest) (*SendObservationRequestResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendObservationRequest not implemented")
+}
+func (UnimplementedNodePrivilegedServiceServer) ChainGovernorStatus(context.Context, *ChainGovernorStatusRequest) (*ChainGovernorStatusResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ChainGovernorStatus not implemented")
+}
+func (UnimplementedNodePrivilegedServiceServer) ChainGovernorReload(context.Context, *ChainGovernorReloadRequest) (*ChainGovernorReloadResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ChainGovernorReload not implemented")
+}
+func (UnimplementedNodePrivilegedServiceServer) ChainGovernorDropPendingVAA(context.Context, *ChainGovernorDropPendingVAARequest) (*ChainGovernorDropPendingVAAResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ChainGovernorDropPendingVAA not implemented")
+}
+func (UnimplementedNodePrivilegedServiceServer) ChainGovernorReleasePendingVAA(context.Context, *ChainGovernorReleasePendingVAARequest) (*ChainGovernorReleasePendingVAAResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ChainGovernorReleasePendingVAA not implemented")
 }
 func (UnimplementedNodePrivilegedServiceServer) mustEmbedUnimplementedNodePrivilegedServiceServer() {}
 
@@ -180,6 +244,78 @@ func _NodePrivilegedService_SendObservationRequest_Handler(srv interface{}, ctx 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _NodePrivilegedService_ChainGovernorStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ChainGovernorStatusRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NodePrivilegedServiceServer).ChainGovernorStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/node.v1.NodePrivilegedService/ChainGovernorStatus",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NodePrivilegedServiceServer).ChainGovernorStatus(ctx, req.(*ChainGovernorStatusRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _NodePrivilegedService_ChainGovernorReload_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ChainGovernorReloadRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NodePrivilegedServiceServer).ChainGovernorReload(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/node.v1.NodePrivilegedService/ChainGovernorReload",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NodePrivilegedServiceServer).ChainGovernorReload(ctx, req.(*ChainGovernorReloadRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _NodePrivilegedService_ChainGovernorDropPendingVAA_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ChainGovernorDropPendingVAARequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NodePrivilegedServiceServer).ChainGovernorDropPendingVAA(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/node.v1.NodePrivilegedService/ChainGovernorDropPendingVAA",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NodePrivilegedServiceServer).ChainGovernorDropPendingVAA(ctx, req.(*ChainGovernorDropPendingVAARequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _NodePrivilegedService_ChainGovernorReleasePendingVAA_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ChainGovernorReleasePendingVAARequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NodePrivilegedServiceServer).ChainGovernorReleasePendingVAA(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/node.v1.NodePrivilegedService/ChainGovernorReleasePendingVAA",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NodePrivilegedServiceServer).ChainGovernorReleasePendingVAA(ctx, req.(*ChainGovernorReleasePendingVAARequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // NodePrivilegedService_ServiceDesc is the grpc.ServiceDesc for NodePrivilegedService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -198,6 +334,22 @@ var NodePrivilegedService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SendObservationRequest",
 			Handler:    _NodePrivilegedService_SendObservationRequest_Handler,
+		},
+		{
+			MethodName: "ChainGovernorStatus",
+			Handler:    _NodePrivilegedService_ChainGovernorStatus_Handler,
+		},
+		{
+			MethodName: "ChainGovernorReload",
+			Handler:    _NodePrivilegedService_ChainGovernorReload_Handler,
+		},
+		{
+			MethodName: "ChainGovernorDropPendingVAA",
+			Handler:    _NodePrivilegedService_ChainGovernorDropPendingVAA_Handler,
+		},
+		{
+			MethodName: "ChainGovernorReleasePendingVAA",
+			Handler:    _NodePrivilegedService_ChainGovernorReleasePendingVAA_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
