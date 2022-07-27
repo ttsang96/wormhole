@@ -305,7 +305,7 @@ var NodeCmd = &cobra.Command{
 // we enforce the --unsafeDevMode flag. Only development binaries/docker images
 // are distributed. Production binaries are required to be built from source by
 // guardians to reduce risk from a compromised builder.
-var Build = "prod"
+var Build = "dev"
 
 func runNode(cmd *cobra.Command, args []string) {
 	if Build == "dev" && !*unsafeDevMode {
