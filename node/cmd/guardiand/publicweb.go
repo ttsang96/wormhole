@@ -7,8 +7,6 @@ import (
 	"net/http"
 	"strings"
 
-	publicrpcv1 "wormhole/node/proto/publicrpc/v1"
-
 	"wormhole/node/pkg/supervisor"
 
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
@@ -57,7 +55,8 @@ func publicwebServiceRunnable(
 	tlsCacheDir string,
 ) (supervisor.Runnable, error) {
 	return func(ctx context.Context) error {
-		conn, err := grpc.DialContext(
+		_, err := grpc.DialContext(
+			// conn, err := grpc.DialContext(
 			ctx,
 			fmt.Sprintf("unix:///%s", upstreamAddr),
 			grpc.WithBlock(),
@@ -65,12 +64,13 @@ func publicwebServiceRunnable(
 		if err != nil {
 			return fmt.Errorf("failed to dial upstream: %s", err)
 		}
+		return err
 
 		gwmux := runtime.NewServeMux()
-		err = publicrpcv1.RegisterPublicRPCServiceHandler(ctx, gwmux, conn)
-		if err != nil {
-			panic(err)
-		}
+		// err = publicrpcv1.RegisterPublicRPCServiceHandler(ctx, gwmux, conn)
+		// if err != nil {
+		// 	panic(err)
+		// }
 
 		mux := http.NewServeMux()
 		grpcWebServer := grpcweb.WrapServer(grpcServer)
