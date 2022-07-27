@@ -20,7 +20,6 @@ import (
 	"github.com/gagliardetto/solana-go/rpc"
 	"go.uber.org/zap/zapcore"
 
-	solana_types "github.com/gagliardetto/solana-go"
 	"github.com/gorilla/mux"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 
@@ -454,123 +453,123 @@ func runNode(cmd *cobra.Command, args []string) {
 	if *dataDir == "" {
 		logger.Fatal("Please specify --dataDir")
 	}
-	if *ethRPC == "" {
-		logger.Fatal("Please specify --ethRPC")
-	}
-	if *ethContract == "" {
-		logger.Fatal("Please specify --ethContract")
-	}
+	// if *ethRPC == "" {
+	// 	logger.Fatal("Please specify --ethRPC")
+	// }
+	// if *ethContract == "" {
+	// 	logger.Fatal("Please specify --ethContract")
+	// }
 	if *bscRPC == "" {
 		logger.Fatal("Please specify --bscRPC")
 	}
 	if *bscContract == "" {
 		logger.Fatal("Please specify --bscContract")
 	}
-	if *polygonRPC == "" {
-		logger.Fatal("Please specify --polygonRPC")
-	}
-	if *polygonContract == "" {
-		logger.Fatal("Please specify --polygonContract")
-	}
-	if *avalancheRPC == "" {
-		logger.Fatal("Please specify --avalancheRPC")
-	}
-	if *oasisRPC == "" {
-		logger.Fatal("Please specify --oasisRPC")
-	}
-	if *fantomRPC == "" {
-		logger.Fatal("Please specify --fantomRPC")
-	}
-	if *fantomContract == "" && !*unsafeDevMode {
-		logger.Fatal("Please specify --fantomContract")
-	}
-	if *auroraRPC == "" {
-		logger.Fatal("Please specify --auroraRPC")
-	}
-	if *auroraContract == "" && !*unsafeDevMode {
-		logger.Fatal("Please specify --auroraContract")
-	}
-	if *karuraRPC == "" {
-		logger.Fatal("Please specify --karuraRPC")
-	}
-	if *karuraContract == "" && !*unsafeDevMode {
-		logger.Fatal("Please specify --karuraContract")
-	}
-	if *acalaRPC == "" {
-		logger.Fatal("Please specify --acalaRPC")
-	}
-	if *acalaContract == "" && !*unsafeDevMode {
-		logger.Fatal("Please specify --acalaContract")
-	}
-	if *klaytnRPC == "" {
-		logger.Fatal("Please specify --klaytnRPC")
-	}
-	if *klaytnContract == "" && !*unsafeDevMode {
-		logger.Fatal("Please specify --klaytnContract")
-	}
-	if *celoRPC == "" {
-		logger.Fatal("Please specify --celoRPC")
-	}
-	if *celoContract == "" && !*unsafeDevMode {
-		logger.Fatal("Please specify --celoContract")
-	}
-	if *testnetMode {
-		if *ethRopstenRPC == "" {
-			logger.Fatal("Please specify --ethRopstenRPC")
-		}
-		if *ethRopstenContract == "" {
-			logger.Fatal("Please specify --ethRopstenContract")
-		}
-		if *moonbeamRPC == "" {
-			logger.Fatal("Please specify --moonbeamRPC")
-		}
-		if *moonbeamContract == "" {
-			logger.Fatal("Please specify --moonbeamContract")
-		}
-		if *neonRPC == "" {
-			logger.Fatal("Please specify --neonRPC")
-		}
-		if *neonContract == "" {
-			logger.Fatal("Please specify --neonContract")
-		}
-		if *injectiveWS == "" {
-			logger.Fatal("Please specify --injectiveWS")
-		}
-		if *injectiveLCD == "" {
-			logger.Fatal("Please specify --injectiveLCD")
-		}
-		if *injectiveContract == "" {
-			logger.Fatal("Please specify --injectiveContract")
-		}
-	} else {
-		if *ethRopstenRPC != "" {
-			logger.Fatal("Please do not specify --ethRopstenRPC in non-testnet mode")
-		}
-		if *ethRopstenContract != "" {
-			logger.Fatal("Please do not specify --ethRopstenContract in non-testnet mode")
-		}
-		if *moonbeamRPC != "" && !*unsafeDevMode {
-			logger.Fatal("Please do not specify --moonbeamRPC")
-		}
-		if *moonbeamContract != "" && !*unsafeDevMode {
-			logger.Fatal("Please do not specify --moonbeamContract")
-		}
-		if *neonRPC != "" && !*unsafeDevMode {
-			logger.Fatal("Please do not specify --neonRPC")
-		}
-		if *neonContract != "" && !*unsafeDevMode {
-			logger.Fatal("Please do not specify --neonContract")
-		}
-		if *injectiveWS != "" && !*unsafeDevMode {
-			logger.Fatal("Please do not specify --injectiveWS")
-		}
-		if *injectiveLCD != "" && !*unsafeDevMode {
-			logger.Fatal("Please do not specify --injectiveLCD")
-		}
-		if *injectiveContract != "" && !*unsafeDevMode {
-			logger.Fatal("Please do not specify --injectiveContract")
-		}
-	}
+	// if *polygonRPC == "" {
+	// 	logger.Fatal("Please specify --polygonRPC")
+	// }
+	// if *polygonContract == "" {
+	// 	logger.Fatal("Please specify --polygonContract")
+	// }
+	// if *avalancheRPC == "" {
+	// 	logger.Fatal("Please specify --avalancheRPC")
+	// }
+	// if *oasisRPC == "" {
+	// 	logger.Fatal("Please specify --oasisRPC")
+	// }
+	// if *fantomRPC == "" {
+	// 	logger.Fatal("Please specify --fantomRPC")
+	// }
+	// if *fantomContract == "" && !*unsafeDevMode {
+	// 	logger.Fatal("Please specify --fantomContract")
+	// }
+	// if *auroraRPC == "" {
+	// 	logger.Fatal("Please specify --auroraRPC")
+	// }
+	// if *auroraContract == "" && !*unsafeDevMode {
+	// 	logger.Fatal("Please specify --auroraContract")
+	// }
+	// if *karuraRPC == "" {
+	// 	logger.Fatal("Please specify --karuraRPC")
+	// }
+	// if *karuraContract == "" && !*unsafeDevMode {
+	// 	logger.Fatal("Please specify --karuraContract")
+	// }
+	// if *acalaRPC == "" {
+	// 	logger.Fatal("Please specify --acalaRPC")
+	// }
+	// if *acalaContract == "" && !*unsafeDevMode {
+	// 	logger.Fatal("Please specify --acalaContract")
+	// }
+	// if *klaytnRPC == "" {
+	// 	logger.Fatal("Please specify --klaytnRPC")
+	// }
+	// if *klaytnContract == "" && !*unsafeDevMode {
+	// 	logger.Fatal("Please specify --klaytnContract")
+	// }
+	// if *celoRPC == "" {
+	// 	logger.Fatal("Please specify --celoRPC")
+	// }
+	// if *celoContract == "" && !*unsafeDevMode {
+	// 	logger.Fatal("Please specify --celoContract")
+	// }
+	// if *testnetMode {
+	// 	if *ethRopstenRPC == "" {
+	// 		logger.Fatal("Please specify --ethRopstenRPC")
+	// 	}
+	// 	if *ethRopstenContract == "" {
+	// 		logger.Fatal("Please specify --ethRopstenContract")
+	// 	}
+	// 	if *moonbeamRPC == "" {
+	// 		logger.Fatal("Please specify --moonbeamRPC")
+	// 	}
+	// 	if *moonbeamContract == "" {
+	// 		logger.Fatal("Please specify --moonbeamContract")
+	// 	}
+	// 	if *neonRPC == "" {
+	// 		logger.Fatal("Please specify --neonRPC")
+	// 	}
+	// 	if *neonContract == "" {
+	// 		logger.Fatal("Please specify --neonContract")
+	// 	}
+	// 	if *injectiveWS == "" {
+	// 		logger.Fatal("Please specify --injectiveWS")
+	// 	}
+	// 	if *injectiveLCD == "" {
+	// 		logger.Fatal("Please specify --injectiveLCD")
+	// 	}
+	// 	if *injectiveContract == "" {
+	// 		logger.Fatal("Please specify --injectiveContract")
+	// 	}
+	// } else {
+	// 	if *ethRopstenRPC != "" {
+	// 		logger.Fatal("Please do not specify --ethRopstenRPC in non-testnet mode")
+	// 	}
+	// 	if *ethRopstenContract != "" {
+	// 		logger.Fatal("Please do not specify --ethRopstenContract in non-testnet mode")
+	// 	}
+	// 	if *moonbeamRPC != "" && !*unsafeDevMode {
+	// 		logger.Fatal("Please do not specify --moonbeamRPC")
+	// 	}
+	// 	if *moonbeamContract != "" && !*unsafeDevMode {
+	// 		logger.Fatal("Please do not specify --moonbeamContract")
+	// 	}
+	// 	if *neonRPC != "" && !*unsafeDevMode {
+	// 		logger.Fatal("Please do not specify --neonRPC")
+	// 	}
+	// 	if *neonContract != "" && !*unsafeDevMode {
+	// 		logger.Fatal("Please do not specify --neonContract")
+	// 	}
+	// 	if *injectiveWS != "" && !*unsafeDevMode {
+	// 		logger.Fatal("Please do not specify --injectiveWS")
+	// 	}
+	// 	if *injectiveLCD != "" && !*unsafeDevMode {
+	// 		logger.Fatal("Please do not specify --injectiveLCD")
+	// 	}
+	// 	if *injectiveContract != "" && !*unsafeDevMode {
+	// 		logger.Fatal("Please do not specify --injectiveContract")
+	// 	}
+	// }
 	if *nodeName == "" {
 		logger.Fatal("Please specify --nodeName")
 	}
@@ -669,21 +668,21 @@ func runNode(cmd *cobra.Command, args []string) {
 		logger.Fatal("Infura is known to send incorrect blocks - please use your own nodes")
 	}
 
-	ethContractAddr := eth_common.HexToAddress(*ethContract)
+	//ethContractAddr := eth_common.HexToAddress(*ethContract)
 	bscContractAddr := eth_common.HexToAddress(*bscContract)
-	polygonContractAddr := eth_common.HexToAddress(*polygonContract)
-	ethRopstenContractAddr := eth_common.HexToAddress(*ethRopstenContract)
-	avalancheContractAddr := eth_common.HexToAddress(*avalancheContract)
-	oasisContractAddr := eth_common.HexToAddress(*oasisContract)
-	auroraContractAddr := eth_common.HexToAddress(*auroraContract)
-	fantomContractAddr := eth_common.HexToAddress(*fantomContract)
-	karuraContractAddr := eth_common.HexToAddress(*karuraContract)
-	acalaContractAddr := eth_common.HexToAddress(*acalaContract)
-	klaytnContractAddr := eth_common.HexToAddress(*klaytnContract)
-	celoContractAddr := eth_common.HexToAddress(*celoContract)
-	moonbeamContractAddr := eth_common.HexToAddress(*moonbeamContract)
-	neonContractAddr := eth_common.HexToAddress(*neonContract)
-	solAddress, err := solana_types.PublicKeyFromBase58(*solanaContract)
+	// polygonContractAddr := eth_common.HexToAddress(*polygonContract)
+	// ethRopstenContractAddr := eth_common.HexToAddress(*ethRopstenContract)
+	// avalancheContractAddr := eth_common.HexToAddress(*avalancheContract)
+	// oasisContractAddr := eth_common.HexToAddress(*oasisContract)
+	// auroraContractAddr := eth_common.HexToAddress(*auroraContract)
+	// fantomContractAddr := eth_common.HexToAddress(*fantomContract)
+	// karuraContractAddr := eth_common.HexToAddress(*karuraContract)
+	// acalaContractAddr := eth_common.HexToAddress(*acalaContract)
+	// klaytnContractAddr := eth_common.HexToAddress(*klaytnContract)
+	// celoContractAddr := eth_common.HexToAddress(*celoContract)
+	// moonbeamContractAddr := eth_common.HexToAddress(*moonbeamContract)
+	// neonContractAddr := eth_common.HexToAddress(*neonContract)
+	// solAddress, err := solana_types.PublicKeyFromBase58(*solanaContract)
 	if err != nil {
 		logger.Fatal("invalid Solana contract address", zap.Error(err))
 	}
