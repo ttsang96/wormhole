@@ -1,1 +1,1 @@
-./node bridge --unsafeDevMode --nodeKey node_key --nodeName node1 --adminSocket /tmp/admin.sock --bscRPC https://data-seed-prebsc-1-s1.binance.org:8545 --bscContract 0xB72E706d1a51e02B41ef675fEe3C8F55C2498483
+./node bridge --unsafeDevMode --nodeKey node_key --nodeName node1 --adminSocket /tmp/admin.sock --bscRPC https://data-seed-prebsc-1-s1.binance.org:8545 --bscContract 0xB72E706d1a51e02B41ef675fEe3C8F55C2498483 --bridgeKey /opt/go-test/keys
