@@ -28,7 +28,6 @@ import (
 	"vebridge/node/pkg/p2p"
 	"vebridge/node/pkg/processor"
 	"vebridge/node/pkg/readiness"
-	solana "vebridge/node/pkg/solana"
 	"vebridge/node/pkg/supervisor"
 	"vebridge/node/pkg/vaa"
 	gossipv1 "vebridge/node/proto/gossip/v1"
@@ -50,8 +49,8 @@ var (
 	bridgeKeyPath       *string
 	solanaBridgeAddress *string
 
-	ethRPC           *string
-	ethContract      *string
+	bscRPC           *string
+	bscContract      *string
 	ethConfirmations *uint64
 
 	solanaWsRPC *string
@@ -80,8 +79,8 @@ func init() {
 	bridgeKeyPath = BridgeCmd.Flags().String("bridgeKey", "", "Path to guardian key (required)")
 	solanaBridgeAddress = BridgeCmd.Flags().String("solanaBridgeAddress", "", "Address of the Solana Bridge Program (required)")
 
-	ethRPC = BridgeCmd.Flags().String("ethRPC", "", "Ethereum RPC URL")
-	ethContract = BridgeCmd.Flags().String("ethContract", "", "Ethereum bridge contract address")
+	bscRPC = BridgeCmd.Flags().String("bscRPC", "", "Ethereum RPC URL")
+	bscContract = BridgeCmd.Flags().String("bscContract", "", "Ethereum bridge contract address")
 	ethConfirmations = BridgeCmd.Flags().Uint64("ethConfirmations", 15, "Ethereum confirmation count requirement")
 
 	solanaWsRPC = BridgeCmd.Flags().String("solanaWS", "", "Solana Websocket URL (required")
@@ -219,7 +218,7 @@ func runBridge(cmd *cobra.Command, args []string) {
 		*p2pBootstrap = fmt.Sprintf("/dns4/guardian-0.guardian/udp/%d/quic/p2p/%s", *p2pPort, g0key.String())
 
 		// Deterministic ganache ETH devnet address.
-		*ethContract = devnet.GanacheBridgeContractAddress.Hex()
+		*bscContract = devnet.GanacheBridgeContractAddress.Hex()
 
 		// Use the hostname as nodeName. For production, we don't want to do this to
 		// prevent accidentally leaking sensitive hostnames.
@@ -231,40 +230,39 @@ func runBridge(cmd *cobra.Command, args []string) {
 	}
 
 	// Verify flags
-
 	if *nodeKeyPath == "" && !*unsafeDevMode { // In devnet mode, keys are deterministically generated.
 		logger.Fatal("Please specify --nodeKey")
 	}
-	if *bridgeKeyPath == "" {
-		logger.Fatal("Please specify --bridgeKey")
-	}
+	// if *bridgeKeyPath == "" {
+	// 	logger.Fatal("Please specify --bridgeKey")
+	// }
 	if *adminSocketPath == "" {
 		logger.Fatal("Please specify --adminSocket")
 	}
-	if *agentRPC == "" {
-		logger.Fatal("Please specify --agentRPC")
+	// if *agentRPC == "" {
+	// 	logger.Fatal("Please specify --agentRPC")
+	// }
+	if *bscRPC == "" {
+		logger.Fatal("Please specify --bscRPC")
 	}
-	if *ethRPC == "" {
-		logger.Fatal("Please specify --ethRPC")
-	}
-	if *ethContract == "" {
-		logger.Fatal("Please specify --ethContract")
+	if *bscContract == "" {
+		logger.Fatal("Please specify --bscContract")
 	}
 	if *nodeName == "" {
 		logger.Fatal("Please specify --nodeName")
 	}
 
-	if *solanaBridgeAddress == "" {
-		logger.Fatal("Please specify --solanaBridgeAddress")
-	}
-	if *solanaWsRPC == "" {
-		logger.Fatal("Please specify --solanaWsUrl")
-	}
-	if *solanaRPC == "" {
-		logger.Fatal("Please specify --solanaUrl")
-	}
+	// if *solanaBridgeAddress == "" {
+	// 	logger.Fatal("Please specify --solanaBridgeAddress")
+	// }
+	// if *solanaWsRPC == "" {
+	// 	logger.Fatal("Please specify --solanaWsUrl")
+	// }
+	// if *solanaRPC == "" {
+	// 	logger.Fatal("Please specify --solanaUrl")
+	// }
 
-	ethContractAddr := eth_common.HexToAddress(*ethContract)
+	bscContractAddr := eth_common.HexToAddress(*bscContract)
 	solBridgeAddress, err := solana_types.PublicKeyFromBase58(*solanaBridgeAddress)
 	if err != nil {
 		logger.Fatal("invalid Solana bridge address", zap.Error(err))
@@ -365,19 +363,19 @@ func runBridge(cmd *cobra.Command, args []string) {
 		}
 
 		if err := supervisor.Run(ctx, "ethwatch",
-			ethereum.NewEthBridgeWatcher(*ethRPC, ethContractAddr, *ethConfirmations, lockC, setC, obsvReqC).Run); err != nil {
+			ethereum.NewEthBridgeWatcher(*bscRPC, bscContractAddr, *ethConfirmations, lockC, setC, obsvReqC).Run); err != nil {
 			return err
 		}
 
-		if err := supervisor.Run(ctx, "solvaa",
-			solana.NewSolanaVAASubmitter(*agentRPC, solanaVaaC, false).Run); err != nil {
-			return err
-		}
+		// if err := supervisor.Run(ctx, "solvaa",
+		// 	solana.NewSolanaVAASubmitter(*agentRPC, solanaVaaC, false).Run); err != nil {
+		// 	return err
+		// }
 
-		if err := supervisor.Run(ctx, "solwatch",
-			solana.NewSolanaWatcher(*solanaWsRPC, *solanaRPC, solBridgeAddress, lockC).Run); err != nil {
-			return err
-		}
+		// if err := supervisor.Run(ctx, "solwatch",
+		// 	solana.NewSolanaWatcher(*solanaWsRPC, *solanaRPC, solBridgeAddress, lockC).Run); err != nil {
+		// 	return err
+		// }
 
 		// TODO: this thing has way too many arguments at this point - make it an options struct
 		p := processor.NewProcessor(ctx,
@@ -391,7 +389,7 @@ func runBridge(cmd *cobra.Command, args []string) {
 			gst,
 			*unsafeDevMode,
 			*devNumGuardians,
-			*ethRPC,
+			*bscRPC,
 		)
 		if err := supervisor.Run(ctx, "processor", p.Run); err != nil {
 			return err
