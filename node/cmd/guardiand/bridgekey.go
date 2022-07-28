@@ -135,10 +135,11 @@ func writeGuardianKey(key *ecdsa.PrivateKey, description string, filename string
 // generateDevnetGuardianKey returns a deterministic testnet key.
 func generateDevnetGuardianKey() (*ecdsa.PrivateKey, error) {
 	// Figure out our devnet index
-	idx, err := devnet.GetDevnetIndex()
-	if err != nil {
-		return nil, err
-	}
+	// idx, err := devnet.GetDevnetIndex()
+	// if err != nil {
+	// 	return nil, err
+	// }
+	idx := 1
 
 	// Generate guardian key
 	return devnet.DeterministicEcdsaKeyByIndex(ethcrypto.S256(), uint64(idx)), nil
