@@ -10,7 +10,6 @@ import (
 
 	"go.uber.org/zap/zapcore"
 
-	solana_types "github.com/gagliardetto/solana-go"
 	"github.com/gorilla/mux"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 
@@ -263,7 +262,7 @@ func runBridge(cmd *cobra.Command, args []string) {
 	// }
 
 	bscContractAddr := eth_common.HexToAddress(*bscContract)
-	solBridgeAddress, err := solana_types.PublicKeyFromBase58(*solanaBridgeAddress)
+	// solBridgeAddress, err := solana_types.PublicKeyFromBase58(*solanaBridgeAddress)
 	if err != nil {
 		logger.Fatal("invalid Solana bridge address", zap.Error(err))
 	}
