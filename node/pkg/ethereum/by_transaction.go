@@ -3,12 +3,13 @@ package ethereum
 import (
 	"context"
 	"fmt"
-	"github.com/certusone/wormhole/node/pkg/common"
-	"github.com/certusone/wormhole/node/pkg/ethereum/abi"
-	"github.com/certusone/wormhole/node/pkg/vaa"
+	"time"
+	"vebridge/node/pkg/common"
+	"vebridge/node/pkg/ethereum/abi"
+	"vebridge/node/pkg/vaa"
+
 	eth_common "github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
-	"time"
 )
 
 var (

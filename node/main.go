@@ -1,6 +1,6 @@
 package main
 
-import "github.com/certusone/wormhole/node/cmd"
+import "vebridge/node/cmd"
 
 func main() {
 	cmd.Execute()

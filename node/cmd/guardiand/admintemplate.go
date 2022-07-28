@@ -2,8 +2,9 @@ package guardiand
 
 import (
 	"fmt"
-	"github.com/certusone/wormhole/node/pkg/devnet"
-	nodev1 "github.com/certusone/wormhole/node/pkg/proto/node/v1"
+	"vebridge/node/pkg/devnet"
+	nodev1 "vebridge/node/proto/node/v1"
+
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/spf13/cobra"
 	"google.golang.org/protobuf/encoding/prototext"

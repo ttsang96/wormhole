@@ -14,10 +14,10 @@ import (
 	"k8s.io/apimachinery/pkg/util/wait"
 	"k8s.io/client-go/kubernetes"
 
-	"github.com/certusone/wormhole/node/pkg/devnet"
-	"github.com/certusone/wormhole/node/pkg/ethereum/abi"
-	"github.com/certusone/wormhole/node/pkg/ethereum/erc20"
-	"github.com/certusone/wormhole/node/pkg/vaa"
+	"vebridge/node/pkg/devnet"
+	"vebridge/node/pkg/ethereum/abi"
+	"vebridge/node/pkg/ethereum/erc20"
+	"vebridge/node/pkg/vaa"
 )
 
 // waitEthBalance waits for target account before to increase.

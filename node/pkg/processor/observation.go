@@ -4,19 +4,20 @@ import (
 	"context"
 	"encoding/hex"
 	"fmt"
-	bridge_common "github.com/certusone/wormhole/node/pkg/common"
-	"github.com/mr-tron/base58"
-	"github.com/prometheus/client_golang/prometheus"
 	"strings"
 	"time"
+	bridge_common "vebridge/node/pkg/common"
+
+	"github.com/mr-tron/base58"
+	"github.com/prometheus/client_golang/prometheus"
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
 	"go.uber.org/zap"
 
-	"github.com/certusone/wormhole/node/pkg/devnet"
-	gossipv1 "github.com/certusone/wormhole/node/pkg/proto/gossip/v1"
-	"github.com/certusone/wormhole/node/pkg/vaa"
+	"vebridge/node/pkg/devnet"
+	"vebridge/node/pkg/vaa"
+	gossipv1 "vebridge/node/proto/gossip/v1"
 )
 
 var (

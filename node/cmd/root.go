@@ -2,16 +2,16 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/certusone/wormhole/node/cmd/debug"
-	"github.com/certusone/wormhole/node/pkg/version"
 	"os"
+	"vebridge/node/cmd/debug"
+	"vebridge/node/pkg/version"
 
 	"github.com/spf13/cobra"
 
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/viper"
 
-	"github.com/certusone/wormhole/node/cmd/guardiand"
+	"vebridge/node/cmd/guardiand"
 )
 
 var cfgFile string

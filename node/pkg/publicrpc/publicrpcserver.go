@@ -2,8 +2,9 @@ package publicrpc
 
 import (
 	"context"
-	"github.com/certusone/wormhole/node/pkg/common"
-	publicrpcv1 "github.com/certusone/wormhole/node/pkg/proto/publicrpc/v1"
+	"vebridge/node/pkg/common"
+	publicrpcv1 "vebridge/node/proto/publicrpc/v1"
+
 	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"

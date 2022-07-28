@@ -1,6 +1,6 @@
 package common
 
-import "github.com/certusone/wormhole/node/pkg/readiness"
+import "vebridge/node/pkg/readiness"
 
 const (
 	ReadinessEthSyncing    readiness.Component = "ethSyncing"

@@ -12,8 +12,8 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
 
-	"github.com/certusone/wormhole/node/pkg/ethereum"
-	"github.com/certusone/wormhole/node/pkg/vaa"
+	"vebridge/node/pkg/ethereum"
+	"vebridge/node/pkg/vaa"
 )
 
 type signerInfo struct {

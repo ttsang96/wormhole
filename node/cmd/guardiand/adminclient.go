@@ -4,20 +4,21 @@ import (
 	"context"
 	"encoding/hex"
 	"fmt"
-	gossipv1 "github.com/certusone/wormhole/node/pkg/proto/gossip/v1"
-	publicrpcv1 "github.com/certusone/wormhole/node/pkg/proto/publicrpc/v1"
-	"github.com/spf13/pflag"
 	"io/ioutil"
 	"log"
 	"strconv"
 	"time"
+	gossipv1 "vebridge/node/proto/gossip/v1"
+	publicrpcv1 "vebridge/node/proto/publicrpc/v1"
+
+	"github.com/spf13/pflag"
 
 	"github.com/spf13/cobra"
 	"github.com/status-im/keycard-go/hexutils"
 	"google.golang.org/grpc"
 	"google.golang.org/protobuf/encoding/prototext"
 
-	nodev1 "github.com/certusone/wormhole/node/pkg/proto/node/v1"
+	nodev1 "vebridge/node/proto/node/v1"
 )
 
 var clientSocketPath *string

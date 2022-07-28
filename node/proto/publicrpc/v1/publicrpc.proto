@@ -2,9 +2,9 @@ syntax = "proto3";
 
 package publicrpc.v1;
 
-option go_package = "github.com/certusone/wormhole/node/pkg/proto/publicrpc/v1;publicrpcv1";
+option go_package = "vebridge/node/proto/publicrpc/v1;publicrpcv1";
 
-import "gossip/v1/gossip.proto";
+import "proto/gossip/v1/gossip.proto";
 
 enum ChainID {
   CHAIN_ID_UNSPECIFIED = 0;

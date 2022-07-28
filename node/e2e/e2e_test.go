@@ -9,8 +9,8 @@ import (
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"k8s.io/client-go/kubernetes"
 
-	"github.com/certusone/wormhole/node/pkg/devnet"
 	"github.com/ethereum/go-ethereum/ethclient"
+	"vebridge/node/pkg/devnet"
 )
 
 // Run in a remote Tilt env:

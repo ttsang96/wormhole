@@ -3,13 +3,14 @@ package debug
 import (
 	"context"
 	"encoding/hex"
-	"github.com/certusone/wormhole/node/pkg/solana"
-	"github.com/certusone/wormhole/node/pkg/supervisor"
-	"github.com/certusone/wormhole/node/pkg/vaa"
-	"github.com/spf13/cobra"
-	"go.uber.org/zap"
 	"log"
 	"strings"
+	"vebridge/node/pkg/solana"
+	"vebridge/node/pkg/supervisor"
+	"vebridge/node/pkg/vaa"
+
+	"github.com/spf13/cobra"
+	"go.uber.org/zap"
 )
 
 var (

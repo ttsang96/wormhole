@@ -1,4 +1,4 @@
-module github.com/certusone/wormhole/node
+module vebridge/node
 
 go 1.17
 

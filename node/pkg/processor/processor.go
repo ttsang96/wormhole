@@ -10,11 +10,11 @@ import (
 	"github.com/ethereum/go-ethereum/crypto"
 	"go.uber.org/zap"
 
-	"github.com/certusone/wormhole/node/pkg/common"
-	"github.com/certusone/wormhole/node/pkg/devnet"
-	gossipv1 "github.com/certusone/wormhole/node/pkg/proto/gossip/v1"
-	"github.com/certusone/wormhole/node/pkg/supervisor"
-	"github.com/certusone/wormhole/node/pkg/vaa"
+	"vebridge/node/pkg/common"
+	"vebridge/node/pkg/devnet"
+	"vebridge/node/pkg/supervisor"
+	"vebridge/node/pkg/vaa"
+	gossipv1 "vebridge/node/proto/gossip/v1"
 )
 
 type (

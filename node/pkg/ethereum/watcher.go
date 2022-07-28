@@ -3,14 +3,16 @@ package ethereum
 import (
 	"context"
 	"fmt"
-	"github.com/certusone/wormhole/node/pkg/p2p"
-	gossipv1 "github.com/certusone/wormhole/node/pkg/proto/gossip/v1"
-	"github.com/ethereum/go-ethereum/rpc"
-	"github.com/prometheus/client_golang/prometheus/promauto"
 	"math/big"
 	"sync"
 	"sync/atomic"
 	"time"
+
+	"vebridge/node/pkg/p2p"
+	gossipv1 "vebridge/node/proto/gossip/v1"
+
+	"github.com/ethereum/go-ethereum/rpc"
+	"github.com/prometheus/client_golang/prometheus/promauto"
 
 	"github.com/prometheus/client_golang/prometheus"
 
@@ -20,11 +22,11 @@ import (
 	"github.com/ethereum/go-ethereum/ethclient"
 	"go.uber.org/zap"
 
-	"github.com/certusone/wormhole/node/pkg/common"
-	"github.com/certusone/wormhole/node/pkg/ethereum/abi"
-	"github.com/certusone/wormhole/node/pkg/readiness"
-	"github.com/certusone/wormhole/node/pkg/supervisor"
-	"github.com/certusone/wormhole/node/pkg/vaa"
+	"vebridge/node/pkg/common"
+	"vebridge/node/pkg/ethereum/abi"
+	"vebridge/node/pkg/readiness"
+	"vebridge/node/pkg/supervisor"
+	"vebridge/node/pkg/vaa"
 )
 
 var (

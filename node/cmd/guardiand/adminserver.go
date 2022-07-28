@@ -4,23 +4,23 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	gossipv1 "github.com/certusone/wormhole/node/pkg/proto/gossip/v1"
-	publicrpcv1 "github.com/certusone/wormhole/node/pkg/proto/publicrpc/v1"
-	"github.com/certusone/wormhole/node/pkg/publicrpc"
 	"math"
 	"net"
 	"os"
 	"time"
+	"vebridge/node/pkg/publicrpc"
+	gossipv1 "vebridge/node/proto/gossip/v1"
+	publicrpcv1 "vebridge/node/proto/publicrpc/v1"
 
 	ethcommon "github.com/ethereum/go-ethereum/common"
 	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	"github.com/certusone/wormhole/node/pkg/common"
-	nodev1 "github.com/certusone/wormhole/node/pkg/proto/node/v1"
-	"github.com/certusone/wormhole/node/pkg/supervisor"
-	"github.com/certusone/wormhole/node/pkg/vaa"
+	"vebridge/node/pkg/common"
+	"vebridge/node/pkg/supervisor"
+	"vebridge/node/pkg/vaa"
+	nodev1 "vebridge/node/proto/node/v1"
 )
 
 type nodePrivilegedService struct {
